@@ -1,0 +1,1 @@
+-- Script de consultas SQL desarrolladas que respondan a la necesidad del negocio
