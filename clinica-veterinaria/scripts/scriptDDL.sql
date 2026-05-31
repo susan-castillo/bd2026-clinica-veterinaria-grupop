@@ -7,7 +7,7 @@ CREATE DATABASE Veterinaria;
 --    Catálogo de especies (ej. perro, gato, etc.)
 -- ============================================================
 CREATE TABLE especies (
-    id_especie        BIGINT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_especie        BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nombre_e          VARCHAR(100)   NOT NULL,
     descripcion_e     TEXT           NOT NULL
 );
@@ -17,8 +17,8 @@ CREATE TABLE especies (
 --    Razas asociadas a cada especie
 -- ============================================================
 CREATE TABLE razas (
-    id_raza           BIGINT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_especie        BIGINT            NOT NULL,
+    id_raza           BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_especie        BIGINT         NOT NULL,
     nombre_r          VARCHAR(100)   NOT NULL,
     CONSTRAINT fk_razas_especie
         FOREIGN KEY (id_especie) REFERENCES especies (id_especie)
@@ -30,7 +30,7 @@ CREATE TABLE razas (
 --    Dueños de las mascotas
 -- ============================================================
 CREATE TABLE propietarios (
-    id_propietario          BIGINT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_propietario          BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     dui_p                   VARCHAR(20)    UNIQUE NOT NULL,
     nombre_p                VARCHAR(100)   NOT NULL,
     apellido_p              VARCHAR(100)   NOT NULL,
@@ -48,12 +48,11 @@ CREATE TABLE propietarios (
 CREATE TABLE mascotas (
     id_mascota        BIGINT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_propietario    BIGINT            NOT NULL,
-    id_especie        BIGINT            NOT NULL,
     id_raza           BIGINT,
-    nombre_m          VARCHAR(100)   NOT NULL,
+    nombre_m          VARCHAR(100)      NOT NULL,
     fecha_nacimiento  DATE,
-    edad_m            INT,           -- atributo derivado (calculable)
-    sexo_m            VARCHAR(10)    CHECK (sexo_m IN ('Macho', 'Hembra')),
+    edad_m            INT,              -- atributo derivado (calculable)
+    sexo_m            VARCHAR(10)       CHECK (sexo_m IN ('Macho', 'Hembra')),
     peso_m            DECIMAL(6,2),
     tamanio_m         VARCHAR(50),
     CONSTRAINT fk_mascotas_propietario
@@ -72,7 +71,7 @@ CREATE TABLE mascotas (
 --    Especialidades médicas de los veterinarios
 -- ============================================================
 CREATE TABLE especialidades (
-    id_especialidad   BIGINT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_especialidad   BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nombre_esp        VARCHAR(150)   NOT NULL,
     descripcion_esp   TEXT
 );
@@ -83,12 +82,12 @@ CREATE TABLE especialidades (
 --    Con relación a especialidades
 -- ============================================================
 CREATE TABLE veterinario (
-    id_veterinario    BIGINT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_especialidad   BIGINT            NOT NULL,
+    id_veterinario    BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_especialidad   BIGINT         NOT NULL,
     nombre_v          VARCHAR(100)   NOT NULL,
     apellido_v        VARCHAR(100)   NOT NULL,
-    telefono_v        VARCHAR(20) UNIQUE,
-    correo_v          VARCHAR(150) UNIQUE,
+    telefono_v        VARCHAR(20)    UNIQUE,
+    correo_v          VARCHAR(150)   UNIQUE,
     CONSTRAINT fk_veterinario_especialidad
         FOREIGN KEY (id_especialidad) REFERENCES especialidades (id_especialidad)
         ON UPDATE CASCADE ON DELETE RESTRICT
@@ -99,9 +98,9 @@ CREATE TABLE veterinario (
 --    Citas médicas de mascotas atendidas por veterinarios
 -- ============================================================
 CREATE TABLE citas (
-    id_cita           BIGINT            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_mascota        BIGINT            NOT NULL,
-    id_veterinario    BIGINT            NOT NULL,
+    id_cita           BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_mascota        BIGINT         NOT NULL,
+    id_veterinario    BIGINT         NOT NULL,
     fecha_c           TIMESTAMP      NOT NULL,
     motivo_c          TEXT,
     estado_c          VARCHAR(20)    NOT NULL DEFAULT 'Programada',
@@ -135,8 +134,8 @@ CREATE TABLE diagnosticos (
 --     Catálogo de procedimientos clínicos
 -- ============================================================
 CREATE TABLE procedimientos (
-    id_procedimento_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_diagnostico BIGINT NOT NULL,
+    id_procedimento BIGINT           GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_diagnostico BIGINT               NOT NULL,
     nombre_p VARCHAR(100),
     descripcion_p TEXT,
     costo_p DECIMAL(10,2),
@@ -151,13 +150,13 @@ CREATE TABLE procedimientos (
 --     Tratamientos médicos (catálogo general)
 -- ============================================================
 CREATE TABLE tratamiento (
-    id_tratamiento BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_diagnostico BIGINT NOT NULL,
+    id_tratamiento BIGINT               GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_diagnostico BIGINT               NOT NULL,
     fecha_inicio DATE,
     fecha_fin DATE,
     descripcion_t TEXT,
     indicaciones_t TEXT,
-    precio_tratamiento DECIMAL(10,2) DEFAULT 0,
+    precio_tratamiento DECIMAL(10,2)    DEFAULT 0,
     CONSTRAINT fk_tratamiento_diagnostico
         FOREIGN KEY (id_diagnostico)
         REFERENCES diagnosticos(id_diagnostico)
@@ -187,13 +186,13 @@ CREATE TABLE medicamentos (
 --     Depende de tratamiento (entidad fuerte)
 -- ============================================================
 CREATE TABLE detalles_tratamientos (
-    id_detalle_tratamiento BIGINT GENERATED ALWAYS AS IDENTITY,
-    id_tratamiento BIGINT NOT NULL,
+    id_detalle_tratamiento BIGINT       GENERATED ALWAYS AS IDENTITY,
+    id_tratamiento BIGINT               NOT NULL,
     dosis_dt VARCHAR(100),
     frecuencia_dt VARCHAR(100),
     duracion_dias_dt INT,
-    cantidad_medicamento BIGINT NOT NULL DEFAULT 1,
-    id_medicamento BIGINT NOT NULL,
+    cantidad_medicamento BIGINT         NOT NULL DEFAULT 1,
+    id_medicamento BIGINT               NOT NULL,
     PRIMARY KEY (id_detalle_tratamiento, id_tratamiento),
     CONSTRAINT fk_dt_tratamiento
         FOREIGN KEY (id_tratamiento)
@@ -212,11 +211,11 @@ CREATE TABLE detalles_tratamientos (
 --     Factura generada por cada cita (relación 1:1 con citas)
 -- ============================================================
 CREATE TABLE facturas (
-    id_factura BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    fecha_emision_f DATE NOT NULL,
-    estado_f VARCHAR(50) DEFAULT 'Pendiente',
-    total_f DECIMAL(10,2) DEFAULT 0,
-    id_cita BIGINT UNIQUE,
+    id_factura BIGINT                   GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    fecha_emision_f DATE                NOT NULL,
+    estado_f VARCHAR(50)                DEFAULT 'Pendiente',
+    total_f DECIMAL(10,2)               DEFAULT 0,
+    id_cita BIGINT                      UNIQUE,
     CONSTRAINT fk_facturas_cita
         FOREIGN KEY (id_cita)
         REFERENCES citas(id_cita)
@@ -231,16 +230,16 @@ CREATE TABLE facturas (
 --     Depende de facturas (entidad fuerte)
 -- ============================================================
 CREATE TABLE detalles_facturas (
-    id_detalle_factura BIGINT GENERATED ALWAYS AS IDENTITY,
-    id_factura BIGINT NOT NULL,
-    descripcion_df TEXT NOT NULL,
-    cantidad_df BIGINT NOT NULL DEFAULT 1,
-    precio_unit_df DECIMAL(10,2) NOT NULL DEFAULT 0,
-    subtotal_df DECIMAL(10,2) GENERATED ALWAYS AS (cantidad_df * precio_unit_df) STORED,
-    id_cita BIGINT NULL,
-    id_medicamento BIGINT NULL,
-    id_tratamiento BIGINT NULL,
-    id_procedimiento BIGINT NULL,
+    id_detalle_factura BIGINT         GENERATED ALWAYS AS IDENTITY,
+    id_factura BIGINT                 NOT NULL,
+    descripcion_df TEXT               NOT NULL,
+    cantidad_df BIGINT                NOT NULL DEFAULT 1,
+    precio_unit_df DECIMAL(10,2)      NOT NULL DEFAULT 0,
+    subtotal_df DECIMAL(10,2)         GENERATED ALWAYS AS (cantidad_df * precio_unit_df) STORED,
+    id_cita BIGINT                    NULL,
+    id_medicamento BIGINT             NULL,
+    id_tratamiento BIGINT             NULL,
+    id_procedimiento BIGINT           NULL,
     PRIMARY KEY (id_detalle_factura, id_factura),
     CONSTRAINT fk_df_factura
         FOREIGN KEY (id_factura)
