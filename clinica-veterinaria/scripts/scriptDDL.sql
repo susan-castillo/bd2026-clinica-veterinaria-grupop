@@ -3,7 +3,7 @@
 -- Versión mejorada con validaciones de integridad
 -- ============================================================
 
-CREATE DATABASE Veterinaria;
+--CREATE DATABASE db_veterinaria;
 
 -- ============================================================
 -- 1. TABLA: especies
@@ -169,13 +169,10 @@ CREATE TABLE tratamiento (
     fecha_fin           DATE,
     descripcion_t       TEXT,
     indicaciones_t      TEXT,
-    precio_tratamiento  DECIMAL(10,2)    DEFAULT 0,
     CONSTRAINT fk_tratamiento_diagnostico
         FOREIGN KEY (id_diagnostico)
         REFERENCES diagnosticos (id_diagnostico)
         ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT chk_precio_tratamiento
-        CHECK (precio_tratamiento >= 0),
     CONSTRAINT chk_fechas_tratamiento
         CHECK (fecha_inicio IS NULL OR fecha_fin IS NULL OR fecha_inicio <= fecha_fin),
     CONSTRAINT chk_fecha_inicio_minima
@@ -206,14 +203,13 @@ CREATE TABLE medicamentos (
 -- 12. TABLA: detalles_tratamientos (ENTIDAD DÉBIL)
 -- ============================================================
 CREATE TABLE detalles_tratamientos (
-    id_detalle_tratamiento  BIGINT       GENERATED ALWAYS AS IDENTITY,
+    id_detalle_tratamiento  BIGINT       NOT NULL, -- Controlado por trigger
     id_tratamiento          BIGINT       NOT NULL,
+    id_medicamento          BIGINT       NOT NULL,
     dosis_dt                VARCHAR(100),
     frecuencia_dt           VARCHAR(100),
     duracion_dias_dt        INT,
-    cantidad_medicamento    BIGINT       NOT NULL DEFAULT 1,
-    id_medicamento          BIGINT       NOT NULL,
-    PRIMARY KEY (id_detalle_tratamiento, id_tratamiento),
+    PRIMARY KEY (id_tratamiento, id_detalle_tratamiento),
     CONSTRAINT fk_dt_tratamiento
         FOREIGN KEY (id_tratamiento)
         REFERENCES tratamiento (id_tratamiento)
@@ -224,8 +220,6 @@ CREATE TABLE detalles_tratamientos (
         ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT chk_duracion
         CHECK (duracion_dias_dt IS NULL OR duracion_dias_dt > 0),
-    CONSTRAINT chk_cantidad_medicamento
-        CHECK (cantidad_medicamento > 0),
     CONSTRAINT uq_medicamento_por_tratamiento
         UNIQUE (id_tratamiento, id_medicamento),
     CONSTRAINT chk_duracion_maxima
@@ -237,10 +231,10 @@ CREATE TABLE detalles_tratamientos (
 -- ============================================================
 CREATE TABLE facturas (
     id_factura        BIGINT         GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_cita           BIGINT         UNIQUE,
     fecha_emision_f   DATE           NOT NULL,
     estado_f          VARCHAR(50)    DEFAULT 'Pendiente',
     total_f           DECIMAL(10,2)  DEFAULT 0,
-    id_cita           BIGINT         UNIQUE,
     CONSTRAINT fk_facturas_cita
         FOREIGN KEY (id_cita)
         REFERENCES citas (id_cita)
@@ -259,17 +253,17 @@ CREATE TABLE facturas (
 -- 14. TABLA: detalles_facturas (ENTIDAD DÉBIL)
 -- ============================================================
 CREATE TABLE detalles_facturas (
-    id_detalle_factura  BIGINT           GENERATED ALWAYS AS IDENTITY,
+    id_detalle_factura  BIGINT           NOT NULL, -- Controlado por trigger
     id_factura          BIGINT           NOT NULL,
-    descripcion_df      TEXT             NOT NULL,
-    cantidad_df         BIGINT           NOT NULL DEFAULT 1,
-    precio_unit_df      DECIMAL(10,2)    NOT NULL DEFAULT 0,
-    subtotal_df         DECIMAL(10,2)    GENERATED ALWAYS AS (cantidad_df * precio_unit_df) STORED,
     id_cita             BIGINT           NULL,
     id_medicamento      BIGINT           NULL,
     id_tratamiento      BIGINT           NULL,
     id_procedimiento    BIGINT           NULL,
-    PRIMARY KEY (id_detalle_factura, id_factura),
+    descripcion_df      TEXT             NOT NULL,
+    cantidad_df         BIGINT           NOT NULL DEFAULT 1,
+    precio_unit_df      DECIMAL(10,2)    NOT NULL DEFAULT 0,
+    subtotal_df         DECIMAL(10,2)    GENERATED ALWAYS AS (cantidad_df * precio_unit_df) STORED,
+    PRIMARY KEY (id_factura, id_detalle_factura),
     CONSTRAINT fk_df_factura
         FOREIGN KEY (id_factura)
         REFERENCES facturas (id_factura)
@@ -288,7 +282,7 @@ CREATE TABLE detalles_facturas (
         ON UPDATE CASCADE ON DELETE SET NULL,
     CONSTRAINT fk_df_procedimiento
         FOREIGN KEY (id_procedimiento)
-        REFERENCES procedimientos (id_procedimento)
+        REFERENCES procedimientos (id_procedimiento)
         ON UPDATE CASCADE ON DELETE SET NULL,
     CONSTRAINT chk_cantidad_df
         CHECK (cantidad_df > 0),
@@ -299,8 +293,7 @@ CREATE TABLE detalles_facturas (
     -- Exactamente uno de los campos de referencia debe estar poblado
     CONSTRAINT chk_un_solo_item CHECK (
         (id_cita IS NOT NULL AND id_medicamento IS NULL AND id_tratamiento IS NULL AND id_procedimiento IS NULL) OR
-        (id_cita IS NULL AND id_medicamento IS NOT NULL AND id_tratamiento IS NULL AND id_procedimiento IS NULL) OR
-        (id_cita IS NULL AND id_medicamento IS NULL AND id_tratamiento IS NOT NULL AND id_procedimiento IS NULL) OR
+        (id_cita IS NULL AND id_medicamento IS NOT NULL AND id_tratamiento IS NOT NULL AND id_procedimiento IS NULL) OR
         (id_cita IS NULL AND id_medicamento IS NULL AND id_tratamiento IS NULL AND id_procedimiento IS NOT NULL)
     )
 );
