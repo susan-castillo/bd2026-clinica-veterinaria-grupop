@@ -1,2 +1,0 @@
--- Script DML de carga inicial con datos representativos
--- (INSERT, UPDATE, DELETE)
