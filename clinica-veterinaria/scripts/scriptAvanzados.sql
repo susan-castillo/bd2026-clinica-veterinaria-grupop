@@ -1,1 +1,0 @@
--- Script de funciones, procedimientos y triggers
