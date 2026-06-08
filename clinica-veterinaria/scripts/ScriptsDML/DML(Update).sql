@@ -300,3 +300,30 @@ WHERE id_cita = 19 RETURNING *;
 UPDATE citas
 SET fecha_c = '2026-08-25 10:00:00'
 WHERE id_cita = 49 RETURNING *;
+
+
+-- ============================================================
+-- ============================================================
+
+-- MEDICAMENTOS: Actualización de Inventario (Caja/Farmacia)
+-- Se vendieron medicamentos en las facturas, por lo que actualizamos el stock físico en bodega.
+UPDATE medicamentos
+SET stock_m = stock_m - 5 -- Restamos las 5 suspensiones de Amoxicilina usadas
+WHERE id_medicamento = 19;
+
+UPDATE medicamentos
+SET stock_m = stock_m - 3 -- Restamos las 3 cápsulas de Clindamicina vendidas
+WHERE id_medicamento = 14;
+
+-- FACTURA: Cambio de estado de Facturas (Flujo de Caja)
+-- La factura 10 estaba 'Pendiente'. El propietario llega a colecturía y realiza el pago completo.
+UPDATE facturas
+SET estado_f = 'Pagada'
+WHERE id_factura = 10;
+
+-- TRATAMIENTO: Corrección de errores médicos (Historial Clínico)
+-- El veterinario se equivocó en las indicaciones del tratamiento #4. El dueño llamó para corregir.
+UPDATE tratamiento
+SET indicaciones_t = 'Mantener en ambiente cálido, asear nariz con suero fisiológico cada 8 horas.'
+WHERE id_tratamiento = 4;
+

@@ -280,3 +280,19 @@ WHERE id_cita = 44;
 
 DELETE FROM citas
 WHERE id_cita = 45;
+
+-- ============================================================
+-- ============================================================
+
+-- CITAS: Eliminación de citas canceladas (Limpieza de Agenda)
+-- La cita #41 fue cancelada por el propietario y nunca llegó a la clínica.
+-- Como su costo_c es 0 y no generó diagnóstico ni factura, se puede borrar de la agenda de forma segura.
+DELETE FROM citas
+WHERE id_cita = 41 AND estado_c = 'Cancelada';
+
+
+-- TRATAMIENTO: Eliminación en cascada de Entidades Débiles
+-- El veterinario decidió anular por completo el Tratamiento #20 porque la mascota era alérgica.
+-- Al borrar el tratamiento, la restricción ON DELETE CASCADE borrará automáticamente los renglones en detalles_tratamientos.
+DELETE FROM tratamiento
+WHERE id_tratamiento = 20;
