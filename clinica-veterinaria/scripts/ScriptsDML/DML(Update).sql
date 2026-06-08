@@ -319,7 +319,11 @@ WHERE id_medicamento = 14;
 -- La factura 10 estaba 'Pendiente'. El propietario llega a colecturía y realiza el pago completo.
 UPDATE facturas
 SET estado_f = 'Pagada'
-WHERE id_factura = 10;
+WHERE id_factura = 1;
+
+UPDATE facturas
+SET estado_f = 'Pagada'
+WHERE id_factura = 2;
 
 -- TRATAMIENTO: Corrección de errores médicos (Historial Clínico)
 -- El veterinario se equivocó en las indicaciones del tratamiento #4. El dueño llamó para corregir.
