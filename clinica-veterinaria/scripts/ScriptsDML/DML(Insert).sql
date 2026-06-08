@@ -657,87 +657,87 @@ VALUES ('Epiotic Complete', 'Suspensión ótica 125ml', 'Virbac', 18.50, 25),
 -- ============================================================
 -- 12° INSERT: detalles_tratamientos (Automatizado por Trigger)
 -- ============================================================
-INSERT INTO detalles_tratamientos (id_tratamiento, id_medicamento, dosis_dt, frecuencia_dt, duracion_dias_dt)
-VALUES (1, 1, '5 gotas por oído afectado', 'Cada 12 horas', 7), -- El trigger asignará: id_detalle_tratamiento = 1
-       (1, 19, '1.5 ml vía oral', 'Cada 12 horas', 7),          -- El trigger asignará: id_detalle_tratamiento = 2
-       (2, 19, '2.0 ml vía oral', 'Cada 12 horas', 5),          -- Inicia nuevo padre, trigger asignará: 1
-       (2, 3, '1.0 ml vía oral', 'Cada 8 horas', 3),            -- Trigger asignará: 2
-       (3, 4, '1 tableta masticable total', 'Dosis única', 1),
-       (4, 6, '1/2 tableta vía oral', 'Cada 12 horas', 7),
-       (5, 7, '2 gotas en ojo izquierdo', 'Cada 6 horas', 7),
-       (6, 7, '1 gota en ojo derecho', 'Cada 4 horas', 10),
-       (6, 8, '6 gotas vía oral', 'Cada 24 horas', 5),
-       (7, 8, '12 gotas vía oral', 'Cada 24 horas', 5),
-       (7, 14, '1 cápsula vía oral', 'Cada 12 horas', 10),
-       (8, 10, '1/2 tableta vía oral', 'Cada 24 horas', 180),
-       (9, 11, 'Baño completo dos por semana', 'Cada 3 días', 14),
-       (10, 12, '1 tableta y media vía oral', 'Dosis única', 1),
-       (11, 5, '1 tableta masticable total', 'Dosis única', 1),
-       (12, 14, '1/2 cápsula vía oral', 'Cada 12 horas', 7),
-       (13, 15, '1/4 tableta vía oral', 'Cada 24 horas', 180),
-       (14, 17, '1 tableta triturada en comida', 'Cada 12 horas', 7),
-       (15, 5, '1 tableta masticable total', 'Dosis única', 1),
-       (16, 19, '1.0 ml suspensión vía oral', 'Cada 12 horas', 10);
+INSERT INTO detalles_tratamientos (id_detalle_tratamiento, id_tratamiento, id_medicamento, dosis_dt, frecuencia_dt, duracion_dias_dt)
+VALUES (1, 1, 1, '5 gotas por oído afectado', 'Cada 12 horas', 7), -- El trigger asignará: id_detalle_tratamiento = 1
+       (2, 1, 19, '1.5 ml vía oral', 'Cada 12 horas', 7),          -- El trigger asignará: id_detalle_tratamiento = 2
+       (3, 2, 19, '2.0 ml vía oral', 'Cada 12 horas', 5),          -- Inicia nuevo padre, trigger asignará: 1
+       (4, 2, 3, '1.0 ml vía oral', 'Cada 8 horas', 3),            -- Trigger asignará: 2
+       (5, 3, 4, '1 tableta masticable total', 'Dosis única', 1),
+       (6, 4, 6, '1/2 tableta vía oral', 'Cada 12 horas', 7),
+       (7, 5, 7, '2 gotas en ojo izquierdo', 'Cada 6 horas', 7),
+       (8, 6, 7, '1 gota en ojo derecho', 'Cada 4 horas', 10),
+       (9, 6, 8, '6 gotas vía oral', 'Cada 24 horas', 5),
+       (10, 7, 8, '12 gotas vía oral', 'Cada 24 horas', 5),
+       (11, 7, 14, '1 cápsula vía oral', 'Cada 12 horas', 10),
+       (12, 8, 10, '1/2 tableta vía oral', 'Cada 24 horas', 180),
+       (13, 9, 11, 'Baño completo dos por semana', 'Cada 3 días', 14),
+       (14, 10, 12, '1 tableta y media vía oral', 'Dosis única', 1),
+       (15, 11, 5, '1 tableta masticable total', 'Dosis única', 1),
+       (16, 12, 14, '1/2 cápsula vía oral', 'Cada 12 horas', 7),
+       (17, 13, 15, '1/4 tableta vía oral', 'Cada 24 horas', 180),
+       (18, 14, 17, '1 tableta triturada en comida', 'Cada 12 horas', 7),
+       (19, 15, 5, '1 tableta masticable total', 'Dosis única', 1),
+       (20, 16, 19, '1.0 ml suspensión vía oral', 'Cada 12 horas', 10);
 
 -- ============================================================
 -- 13° INSERT: facturas (20 Inserts)
 -- ============================================================
 INSERT INTO facturas (id_cita, fecha_emision_f, estado_f, total_f)
-VALUES (1, '2025-01-10', 'Pagada', 70.25),   -- id_factura: 1  (Cuadra con Detalles F1)
-       (2, '2025-01-15', 'Pagada', 25.00),   -- id_factura: 2  (Cuadra con Detalles F2)
+VALUES (1, '2025-01-10', 'Pendiente', 0),   -- id_factura: 1  (Cuadra con Detalles F1)
+       (2, '2025-01-15', 'Pendiente', 0),   -- id_factura: 2  (Cuadra con Detalles F2)
        (3, '2025-01-20', 'Pagada', 18.00),
-       (4, '2025-01-25', 'Pagada', 54.25),   -- id_factura: 4  (Cuadra con Detalles F4)
+       (4, '2025-01-25', 'Pendiente', 0),   -- id_factura: 4  (Cuadra con Detalles F4)
        (5, '2025-02-01', 'Pagada', 22.00),
-       (6, '2025-02-05', 'Pagada', 78.00),   -- id_factura: 6  (Cuadra con Detalles F6)
+       (6, '2025-02-05', 'Pendiente', 0),   -- id_factura: 6  (Cuadra con Detalles F6)
        (7, '2025-02-10', 'Pagada', 20.00),
        (8, '2025-02-15', 'Pagada', 20.00),
        (9, '2025-02-20', 'Pagada', 79.50),
-       (10, '2025-02-25', 'Pendiente', 25.00),
+       (10, '2025-02-25', 'Pagada', 25.00),
        (12, '2025-03-06', 'Pagada', 47.50),
        (13, '2025-03-10', 'Pagada', 49.20),
-       (14, '2025-03-15', 'Pagada', 458.10), -- id_factura: 13 (Cuadra con Detalles F14)
+       (14, '2025-03-15', 'Pendiente', 0), -- id_factura: 13 (Cuadra con Detalles F14)
        (16, '2025-03-25', 'Pagada', 139.50),
        (19, '2025-04-10', 'Pagada', 71.00),
        (24, '2025-05-05', 'Pagada', 61.50),
        (26, '2025-05-15', 'Pagada', 62.00),
-       (31, '2025-06-11', 'Pagada', 158.10), -- id_factura: 18 (Cuadra con Detalles F18)
+       (31, '2025-06-11', 'Pendiente', 0), -- id_factura: 18 (Cuadra con Detalles F18)
        (34, '2025-06-25', 'Pagada', 109.00),
        (35, '2025-06-28', 'Pagada', 81.50);
 
 -- ============================================================
 -- 14° INSERT: detalles_facturas (Automatizado por Trigger)
 -- ============================================================
-INSERT INTO detalles_facturas (id_factura, id_cita, id_medicamento, id_tratamiento, id_procedimiento, descripcion_df,
+INSERT INTO detalles_facturas (id_detalle_factura, id_factura, id_cita, id_medicamento, id_tratamiento, id_procedimiento, descripcion_df,
                                cantidad_df, precio_unit_df)
 VALUES
 -- Factura 1 (Otitis de Max) - Se auto-generarán renglones del 1 al 4
-(1, 1, NULL, NULL, NULL, 'Costo de atención - Consulta Médica Base', 1, 20.00),
-(1, NULL, NULL, NULL, 1, 'Procedimiento Clínico: Limpieza ótica profunda', 1, 15.00),
-(1, NULL, 1, 1, NULL, 'Medicamento Recetado: Epiotic Complete 125ml', 1, 18.50),
-(1, NULL, 19, 1, NULL, 'Medicamento Recetado: Amoxicilina + AC Suspensión', 1, 16.75),
+(1, 1, 1, NULL, NULL, NULL, 'Costo de atención - Consulta Médica Base', 1, 20.00),
+(2, 1, NULL, NULL, NULL, 1, 'Procedimiento Clínico: Limpieza ótica profunda', 1, 15.00),
+(3, 1, NULL, 1, 1, NULL, 'Medicamento Recetado: Epiotic Complete 125ml', 1, 18.50),
+(4, 1, NULL, 19, 1, NULL, 'Medicamento Recetado: Amoxicilina + AC Suspensión', 1, 16.75),
 
 -- Factura 2 (Vacunación de Luna) - Se auto-generará renglón 1
-(2, 2, NULL, NULL, NULL, 'Costo de atención - Vacunación anual', 1, 25.00),
+(5, 2, 2, NULL, NULL, NULL, 'Costo de atención - Vacunación anual', 1, 25.00),
 
 -- Factura 4 (Gastroenteritis de Nala) - Se auto-generarán renglones del 1 al 3
-(4, 4, NULL, NULL, NULL, 'Costo de atención - Desparasitación clínica', 1, 15.00),
-(4, NULL, NULL, NULL, 2, 'Procedimiento Clínico: Fluidoterapia ambulatoria', 1, 25.00),
-(4, NULL, 19, 2, NULL, 'Medicamento Recetado: Amoxicilina + AC 60ml', 1, 14.25),
+(6, 4, 4, NULL, NULL, NULL, 'Costo de atención - Desparasitación clínica', 1, 15.00),
+(7, 4, NULL, NULL, NULL, 2, 'Procedimiento Clínico: Fluidoterapia ambulatoria', 1, 25.00),
+(8, 4, NULL, 19, 2, NULL, 'Medicamento Recetado: Amoxicilina + AC 60ml', 1, 14.25),
 
 -- Factura 6 (Dermatitis de Tiny) - Se auto-generarán renglones del 1 al 3
-(6, 6, NULL, NULL, NULL, 'Costo de atención - Consulta dermatológica', 1, 30.00),
-(6, NULL, NULL, NULL, 3, 'Procedimiento Clínico: Raspado de piel superficial', 1, 10.00),
-(6, NULL, 4, 3, NULL, 'Medicamento Recetado: Bravecto Pastilla masticable', 1, 38.00),
+(8, 6, 6, NULL, NULL, NULL, 'Costo de atención - Consulta dermatológica', 1, 30.00),
+(9, 6, NULL, NULL, NULL, 3, 'Procedimiento Clínico: Raspado de piel superficial', 1, 10.00),
+(10, 6, NULL, 4, 3, NULL, 'Medicamento Recetado: Bravecto Pastilla masticable', 1, 38.00),
 
 -- Factura 13 (Cirugía de pierna de Simon - id_factura correlativo real es 13)
-(13, 14, NULL, NULL, NULL, 'Costo de atención - Control postoperatorio', 1, 40.00),
-(13, NULL, NULL, NULL, 6, 'Procedimiento Clínico: Radiografía digital de fémur', 1, 40.00),
-(13, NULL, NULL, NULL, 7, 'Procedimiento Quirúrgico: Fijación interna ósea', 1, 350.00),
-(13, NULL, 8, 7, NULL, 'Medicamento Analgésico: Meloxicam Solución gotas', 1, 11.20),
-(13, NULL, 14, 7, NULL, 'Medicamento Antibiótico: Clindamicina 150mg', 1, 16.90),
+(11, 13, 14, NULL, NULL, NULL, 'Costo de atención - Control postoperatorio', 1, 40.00),
+(12, 13, NULL, NULL, NULL, 6, 'Procedimiento Clínico: Radiografía digital de fémur', 1, 40.00),
+(13, 13, NULL, NULL, NULL, 7, 'Procedimiento Quirúrgico: Fijación interna ósea', 1, 350.00),
+(14, 13, NULL, 8, 7, NULL, 'Medicamento Analgésico: Meloxicam Solución gotas', 1, 11.20),
+(15, 13, NULL, 14, 7, NULL, 'Medicamento Antibiótico: Clindamicina 150mg', 1, 16.90),
 
 -- Factura 18 (Problema dental felino - id_factura correlativo real es 18)
-(18, 31, NULL, NULL, NULL, 'Costo de atención - Vacunación anual base', 1, 25.00),
-(18, NULL, NULL, NULL, 12, 'Procedimiento Dental: Profilaxis ultrasónica', 1, 60.00),
-(18, NULL, NULL, NULL, 14, 'Procedimiento Quirúrgico: Extracción de incisivo', 3, 20.00),
-(18, NULL, 14, 12, NULL, 'Medicamento Antibiótico: Clindamicina caja', 1, 13.10);
+(16, 18, 31, NULL, NULL, NULL, 'Costo de atención - Vacunación anual base', 1, 25.00),
+(17, 18, NULL, NULL, NULL, 12, 'Procedimiento Dental: Profilaxis ultrasónica', 1, 60.00),
+(18, 18, NULL, NULL, NULL, 14, 'Procedimiento Quirúrgico: Extracción de incisivo', 3, 20.00),
+(19, 18, NULL, 14, 12, NULL, 'Medicamento Antibiótico: Clindamicina caja', 2, 13.10);
