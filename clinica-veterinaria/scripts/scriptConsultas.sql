@@ -27,3 +27,21 @@ FROM detalles_facturas df
          JOIN especialidades esp ON v.id_especialidad = esp.id_especialidad
 GROUP BY esp.nombre_esp
 ORDER BY ingresos_totales DESC;
+
+
+--3. los propietarios que más dinero han generado mediante citas y facturas.
+SELECT
+    p.id_propietario,
+    p.nombre_p || ' ' || p.apellido_p AS propietario,
+    COUNT(f.id_factura) AS total_facturas,
+    SUM(f.total_f) AS ingresos_generados
+FROM propietarios p
+JOIN mascotas m
+    ON p.id_propietario = m.id_propietario
+JOIN citas c
+    ON m.id_mascota = c.id_mascota
+JOIN facturas f
+    ON c.id_cita = f.id_cita
+WHERE f.estado_f = 'Pagada'
+GROUP BY p.id_propietario, p.nombre_p, p.apellido_p
+ORDER BY ingresos_generados DESC;
