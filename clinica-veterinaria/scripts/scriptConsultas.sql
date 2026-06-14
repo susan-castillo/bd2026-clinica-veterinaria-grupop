@@ -45,3 +45,17 @@ JOIN facturas f
 WHERE f.estado_f = 'Pagada'
 GROUP BY p.id_propietario, p.nombre_p, p.apellido_p
 ORDER BY ingresos_generados DESC;
+
+--4. Top 10 fechas de cumpleaños más comunes entre mascotas
+SELECT
+    TO_CHAR(masc.fecha_nacimiento, 'MM-DD') AS dia_mes,
+    TO_CHAR(masc.fecha_nacimiento, 'Month DD') AS fecha_nacimiento,
+    COUNT(*) AS cantidad_mascotas,
+    STRING_AGG(masc.nombre_m, ', ' ORDER BY nombre_m) AS mascotas
+FROM mascotas masc
+WHERE fecha_nacimiento IS NOT NULL
+GROUP BY TO_CHAR(fecha_nacimiento, 'MM-DD'), TO_CHAR(fecha_nacimiento, 'Month DD')
+ORDER BY cantidad_mascotas DESC
+LIMIT 10;
+
+
