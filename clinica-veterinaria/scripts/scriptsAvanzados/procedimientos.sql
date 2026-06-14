@@ -17,10 +17,10 @@ AS $$
 DECLARE
     v_id_especialidad BIGINT;
 BEGIN
-	-- 0. Validar que el nombre de la especialidad no esté vacío
-	IF LENGTH(TRIM(p_nombre_esp)) = 0 THEN
-	    RAISE EXCEPTION 'Error: El nombre de la especialidad no puede estar vacío.';
-	END IF;
+    -- 0. Validar que el nombre de la especialidad no esté vacío
+    IF LENGTH(TRIM(p_nombre_esp)) = 0 THEN
+        RAISE EXCEPTION 'Error: El nombre de la especialidad no puede estar vacío.';
+    END IF;
 
     -- 1. Validar que el nombre del veterinario no esté vacío
     IF LENGTH(TRIM(p_nombre_v)) = 0 OR LENGTH(TRIM(p_apellido_v)) = 0 THEN
@@ -53,8 +53,15 @@ BEGIN
     INSERT INTO veterinario (id_especialidad, nombre_v, apellido_v, telefono_v, correo_v)
     VALUES (v_id_especialidad, p_nombre_v, p_apellido_v, p_telefono_v, p_correo_v);
 
+    -- NOTA: COMMIT explícito requerido por buenas prácticas de procedimientos almacenados.
+    -- Genera error "cannot commit while a subtransaction is active" en versiones recientes
+    -- de PostgreSQL cuando DBeaver ejecuta el CALL dentro de una transacción externa activa.
+    -- PostgreSQL confirma la transacción automáticamente al finalizar el CALL sin errores.
+    --COMMIT;
+
 EXCEPTION
     WHEN OTHERS THEN
+        --ROLLBACK;
         RAISE EXCEPTION 'Error al registrar el veterinario: %', SQLERRM;
 END;
 $$;
@@ -95,11 +102,12 @@ BEGIN
         INSERT INTO medicamentos (nombre_m, presentacion_m, laboratorio_m, precio_m, stock_m)
         VALUES (p_nombre_m, p_presentacion_m, p_laboratorio_m, p_precio_m, p_cantidad);
 
-    ELSE
-        -- 4b. Si ya existe, sumar la cantidad al stock actual
-        UPDATE medicamentos
-        SET stock_m = stock_m + p_cantidad
-        WHERE id_medicamento = v_id_medicamento;
+   ELSE
+	    -- 4b. Si ya existe, sumar stock y actualizar precio
+	    UPDATE medicamentos
+	    SET stock_m = stock_m + p_cantidad,
+	        precio_m = p_precio_m
+	    WHERE id_medicamento = v_id_medicamento;
 
     END IF;
 
