@@ -57,11 +57,11 @@ BEGIN
     -- Genera error "cannot commit while a subtransaction is active" en versiones recientes
     -- de PostgreSQL cuando DBeaver ejecuta el CALL dentro de una transacción externa activa.
     -- PostgreSQL confirma la transacción automáticamente al finalizar el CALL sin errores.
-    --COMMIT;
+    COMMIT;
 
 EXCEPTION
     WHEN OTHERS THEN
-        --ROLLBACK;
+        ROLLBACK;
         RAISE EXCEPTION 'Error al registrar el veterinario: %', SQLERRM;
 END;
 $$;
