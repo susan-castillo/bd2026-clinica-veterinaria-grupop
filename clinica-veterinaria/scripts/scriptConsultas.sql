@@ -28,7 +28,6 @@ FROM detalles_facturas df
 GROUP BY esp.nombre_esp
 ORDER BY ingresos_totales DESC;
 
-
 --3. los propietarios que más dinero han generado mediante citas y facturas.
 SELECT
     p.id_propietario,
@@ -46,7 +45,7 @@ WHERE f.estado_f = 'Pagada'
 GROUP BY p.id_propietario, p.nombre_p, p.apellido_p
 ORDER BY ingresos_generados DESC;
 
---4. -- Mascotas con cumpleaños en el mes actual y contacto del propietario
+--4. Mascotas con cumpleaños en el mes actual y contacto del propietario
 SELECT
     m.nombre_m,
     TO_CHAR(m.fecha_nacimiento, 'DD/MM') AS cumpleanos,
