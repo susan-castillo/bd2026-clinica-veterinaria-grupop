@@ -57,3 +57,24 @@ FROM mascotas m
 JOIN propietarios p ON m.id_propietario = p.id_propietario
 WHERE DATE_PART('month', m.fecha_nacimiento) = DATE_PART('month', CURRENT_DATE)
 ORDER BY DATE_PART('day', m.fecha_nacimiento);
+
+--5. Veterinario con mayor número de citas por trimestre
+SELECT
+    v.nombre_v || ' ' || v.apellido_v          AS veterinario,
+    DATE_PART('year', c.fecha_c)               AS anio,
+    DATE_PART('quarter', c.fecha_c)            AS trimestre,
+    COUNT(c.id_cita)                           AS total_citas
+FROM citas c
+JOIN veterinario v   ON c.id_veterinario  = v.id_veterinario
+JOIN especialidades esp ON v.id_especialidad = esp.id_especialidad
+WHERE c.estado_c IN ('Completada', 'En curso')
+GROUP BY
+    v.nombre_v,
+    v.apellido_v,
+    esp.nombre_esp,
+    DATE_PART('year', c.fecha_c),
+    DATE_PART('quarter', c.fecha_c)
+ORDER BY
+    anio DESC,
+    trimestre DESC,
+    total_citas DESC;
