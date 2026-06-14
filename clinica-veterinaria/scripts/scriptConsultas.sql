@@ -46,16 +46,15 @@ WHERE f.estado_f = 'Pagada'
 GROUP BY p.id_propietario, p.nombre_p, p.apellido_p
 ORDER BY ingresos_generados DESC;
 
---4. Top 10 fechas de cumpleaños más comunes entre mascotas
+--4. -- Mascotas con cumpleaños en el mes actual y contacto del propietario
 SELECT
-    TO_CHAR(masc.fecha_nacimiento, 'MM-DD') AS dia_mes,
-    TO_CHAR(masc.fecha_nacimiento, 'Month DD') AS fecha_nacimiento,
-    COUNT(*) AS cantidad_mascotas,
-    STRING_AGG(masc.nombre_m, ', ' ORDER BY nombre_m) AS mascotas
-FROM mascotas masc
-WHERE fecha_nacimiento IS NOT NULL
-GROUP BY TO_CHAR(fecha_nacimiento, 'MM-DD'), TO_CHAR(fecha_nacimiento, 'Month DD')
-ORDER BY cantidad_mascotas DESC
-LIMIT 10;
-
-
+    m.nombre_m,
+    TO_CHAR(m.fecha_nacimiento, 'DD/MM') AS cumpleanos,
+    DATE_PART('year', AGE(m.fecha_nacimiento)) AS edad_actual,
+    p.nombre_p || ' ' || p.apellido_p AS propietario,
+    p.telefono_p,
+    p.correo_p
+FROM mascotas m
+JOIN propietarios p ON m.id_propietario = p.id_propietario
+WHERE DATE_PART('month', m.fecha_nacimiento) = DATE_PART('month', CURRENT_DATE)
+ORDER BY DATE_PART('day', m.fecha_nacimiento);
