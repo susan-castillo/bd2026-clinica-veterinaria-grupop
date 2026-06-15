@@ -254,4 +254,5 @@ CALL sp_agregar_medicamento(
     'Jarabe 200ml',
     'Laboratorio MK',
     3.75,
-    0                -- cantidad inválida
+    0-- cantidad inválida
+);

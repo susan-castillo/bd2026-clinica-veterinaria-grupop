@@ -55,7 +55,6 @@ CREATE TABLE mascotas (
     id_raza           BIGINT            NOT NULL,
     nombre_m          VARCHAR(100)      NOT NULL,
     fecha_nacimiento  DATE,
-    edad_m            INT,
     sexo_m            VARCHAR(10)       CHECK (sexo_m IN ('Macho', 'Hembra')),
     peso_m            DECIMAL(6,2),
     tamanio_m         VARCHAR(50),
@@ -66,7 +65,6 @@ CREATE TABLE mascotas (
         FOREIGN KEY (id_raza) REFERENCES razas (id_raza)
         ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT chk_peso_m CHECK (peso_m IS NULL OR peso_m > 0),
-    CONSTRAINT chk_edad_m CHECK (edad_m IS NULL OR edad_m >= 0),
     CONSTRAINT chk_fecha_nacimiento CHECK (fecha_nacimiento IS NULL OR fecha_nacimiento <= CURRENT_DATE),
     CONSTRAINT chk_nombre_mascota CHECK (LENGTH(TRIM(nombre_m)) > 0)
 );
