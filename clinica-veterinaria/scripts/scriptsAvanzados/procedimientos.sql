@@ -53,16 +53,11 @@ BEGIN
     INSERT INTO veterinario (id_especialidad, nombre_v, apellido_v, telefono_v, correo_v)
     VALUES (v_id_especialidad, p_nombre_v, p_apellido_v, p_telefono_v, p_correo_v);
 
-    -- NOTA: COMMIT explícito requerido por buenas prácticas de procedimientos almacenados.
-    -- Genera error "cannot commit while a subtransaction is active" en versiones recientes
-    -- de PostgreSQL cuando DBeaver ejecuta el CALL dentro de una transacción externa activa.
-    -- PostgreSQL confirma la transacción automáticamente al finalizar el CALL sin errores.
-    COMMIT;
-
-EXCEPTION
-    WHEN OTHERS THEN
-        ROLLBACK;
-        RAISE EXCEPTION 'Error al registrar el veterinario: %', SQLERRM;
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK;
+            RAISE EXCEPTION 'Error al registrar el veterinario: %', SQLERRM;
+    COMMIT; -- Escritura en disco
 END;
 $$;
 
@@ -102,21 +97,22 @@ BEGIN
         INSERT INTO medicamentos (nombre_m, presentacion_m, laboratorio_m, precio_m, stock_m)
         VALUES (p_nombre_m, p_presentacion_m, p_laboratorio_m, p_precio_m, p_cantidad);
 
-   ELSE
-	    -- 4b. Si ya existe, sumar stock y actualizar precio
-	    UPDATE medicamentos
-	    SET stock_m = stock_m + p_cantidad,
-	        precio_m = p_precio_m
-	    WHERE id_medicamento = v_id_medicamento;
+    ELSE
+        -- 4b. Si ya existe, sumar stock y actualizar precio
+        UPDATE medicamentos
+        SET stock_m = stock_m + p_cantidad,
+            precio_m = p_precio_m
+        WHERE id_medicamento = v_id_medicamento;
 
     END IF;
 
-EXCEPTION
-    WHEN OTHERS THEN
-        RAISE EXCEPTION 'Error al agregar el medicamento: %', SQLERRM;
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK;
+            RAISE EXCEPTION 'Error al agregar el medicamento: %', SQLERRM;
+    COMMIT; -- Escritura en disco
 END;
 $$;
-
 -- ============================================================
 -- PRUEBAS DE LOS PROCEDIMIENTOS
 -- ============================================================
@@ -141,14 +137,14 @@ CALL sp_registrar_veterinario(
     'Especialidad en enfermedades de la piel en animales',
     'Sofía',
     'Martínez',
-    '7890-1234',
+    '7090-1234',
     'sofia.martinez@vetclinica.com'
 );
 -- Verificar que se creó la especialidad y el veterinario
 SELECT v.nombre_v, v.apellido_v, v.correo_v, e.nombre_esp
 FROM veterinario v
 JOIN especialidades e ON v.id_especialidad = e.id_especialidad
-WHERE v.correo_v = 'sofia.martinez@vetclinica.com'; 
+WHERE v.correo_v = 'sofia.martanez@vetclinica.com'; 
 
 -- ============================================================
 -- CASO 2: Registro exitoso reutilizando especialidad ya existente
@@ -158,8 +154,8 @@ CALL sp_registrar_veterinario(
     'Esta descripción se ignora porque la especialidad ya existe',
     'Carlos',
     'Reyes',
-    '7890-5678',
-    'carlos.reyes@vetclinica.com'
+    '7090-5678',
+    'carlos.eyes@vetclinica.com'
 );
 -- Verificar que sigue habiendo solo UNA fila de Dermatología
 SELECT COUNT(*) AS total_especialidades
