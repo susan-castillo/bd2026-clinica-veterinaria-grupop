@@ -144,7 +144,7 @@ CALL sp_registrar_veterinario(
 SELECT v.nombre_v, v.apellido_v, v.correo_v, e.nombre_esp
 FROM veterinario v
 JOIN especialidades e ON v.id_especialidad = e.id_especialidad
-WHERE v.correo_v = 'sofia.martanez@vetclinica.com'; 
+WHERE v.correo_v = 'sofia.martinez@vetclinica.com'; 
 
 -- ============================================================
 -- CASO 2: Registro exitoso reutilizando especialidad ya existente
