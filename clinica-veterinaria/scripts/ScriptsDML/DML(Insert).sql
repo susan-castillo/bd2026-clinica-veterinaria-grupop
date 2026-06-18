@@ -538,7 +538,21 @@ VALUES (1, 1, '2025-01-10 09:00:00', 'Consulta general', 'Completada', 20.00),
        (48, 13, '2026-08-05 10:30:00', 'Control de peso programado', 'Programada', 18.00),
        (49, 14, '2026-08-18 16:00:00', 'Consulta de seguimiento', 'Programada', 30.00),
        (50, 15, '2026-08-30 11:00:00', 'Evaluación médica programada', 'Programada', 22.00);
-
+       
+       -- DATOS NUEVOS (10)
+INSERT INTO citas (id_mascota, id_veterinario, fecha_c, motivo_c, estado_c, costo_c)
+VALUES
+ 	   (3,  12, '2026-06-18 09:00:00', 'Problema respiratorio',   'Completada', 35.00),
+   	   (17, 25, '2026-06-19 10:30:00', 'Problema respiratorio',   'Completada', 35.00),
+  	   (42, 38, '2026-06-20 11:00:00', 'Problema respiratorio',   'Completada', 35.00),
+  	   (8,   7, '2026-06-18 14:00:00', 'Consulta dermatológica',  'Completada', 30.00),
+  	   (29, 19, '2026-06-19 15:30:00', 'Consulta dermatológica',  'Completada', 30.00),
+  	   (50, 33, '2026-06-20 09:45:00', 'Consulta dermatológica',  'Completada', 30.00),
+  	   (11, 40, '2026-06-18 08:00:00', 'Vacunación anual',        'Completada', 25.00),
+  	   (23,  2, '2026-06-19 13:00:00', 'Vacunación anual',        'Completada', 25.00),
+  	   (36, 15, '2026-06-20 16:00:00', 'Problema digestivo',      'Completada', 32.00),
+   	   (44, 28, '2026-06-21 10:00:00', 'Problema digestivo',      'Completada', 32.00);
+ 
 
 -- ============================================================
 -- 8° INSERT: diagnosticos (20 Inserts)
@@ -566,6 +580,21 @@ VALUES (1, 'Otitis externa bilateral', 'Presencia de ácaros y secreción de mal
        (19, 'Dermatitis por Malassezia', 'Infección micótica secundaria en pliegues.', '2025-04-10'),
        (20, 'Desparasitación cuatrimestral', 'Tratamiento preventivo antiparasitario.', '2025-04-15');
 
+--DATOS NUEVOS (10) 
+
+INSERT INTO diagnosticos (id_cita, descripcion_d, observaciones_d, fecha_d)
+VALUES
+   	   (52, 'Infección respiratoria felina (Calicivirus)',      'Estornudos frecuentes y secreción nasal serosa bilateral.',         '2026-06-14'),
+       (53, 'Bronquitis aguda canina',                          'Tos productiva persistente con sibilancias leves al auscultarse.',  '2026-06-10'),
+       (54, 'Traqueobronquitis infecciosa (Tos de las perreras)','Tos seca en accesos, sin fiebre asociada al momento del examen.',  '2026-06-01'),
+       (55, 'Dermatitis alérgica por pulga (DAPP)',              'Lesiones eritematosas en región inguinal y base de la cola.',      '2026-06-08'),
+       (56, 'Dermatitis por Malassezia',                        'Infección micótica con prurito intenso en pliegues cutáneos.',     '2026-06-09'),
+       (57, 'Sarna sarcóptica',                                 'Infestación moderada con costras en pabellones auriculares.',      '2026-06-02'),
+       (58, 'Paciente apto para vacunación anual',              'Sin hallazgos clínicos anormales previos a la inmunización.',      '2026-06-08'),
+       (59, 'Refuerzo de vacuna polivalente canina',            'Titer bajo detectado en control previo; revacunación indicada.',   '2026-06-14'),
+       (60, 'Gastroenteritis aguda',                            'Vómitos y diarrea de 48 horas de evolución, hidratación conservada.','2026-06-12'),
+       (61, 'Colitis crónica reagudizada',                      'Heces con moco y sangre fresca; dieta blanda estricta indicada.', '2026-06-11');
+
 -- ============================================================
 -- 9° INSERT: procedimientos (20 Inserts)
 -- ============================================================
@@ -590,6 +619,24 @@ VALUES (1, 'Limpieza ótica profunda', 'Lavado clínico de conducto auditivo ext
        (18, 'Medición de glucosa en sangre', 'Monitoreo rápido con glucómetro portátil.', 6.00),
        (20, 'Aplicación de spot-on clínico', 'Colocación profesional de antiparasitario.', 5.00),
        (2, 'Revisión física pre-vacunación', 'Exploración de ganglios y temperatura.', 10.00);
+
+--DATOS NUEVOS(10)
+--- Vinculados a diagnósticos id 26 al 35 ---
+
+SELECT id_diagnostico, descripcion_d FROM diagnosticos ORDER BY id_diagnostico DESC LIMIT 15;
+
+INSERT INTO procedimientos (id_diagnostico, nombre_p, descripcion_p, costo_p)
+VALUES
+    (26, 'Radiografía de tórax',                'Dos proyecciones para evaluación de campo pulmonar.',         30.00),
+    (27, 'Auscultación cardiopulmonar ampliada', 'Evaluación de ruidos pulmonares con estetoscopio digital.',   12.00),
+    (28, 'Prueba rápida de Moquillo-Parvovirus', 'Descarte de agentes virales respiratorios caninos.',          28.00),
+    (29, 'Raspado de piel superficial',          'Toma de muestra para identificación de ectoparásitos.',       10.00),
+    (30, 'Citología de piel',                    'Tinción e identificación microscópica de levaduras y cocos.', 12.00),
+    (31, 'Prueba de alergia intradérmica',        'Evaluación de hipersensibilidad cutánea por antígenos.',      45.00),
+    (32, 'Revisión física pre-vacunación',        'Exploración de ganglios, temperatura y mucosas.',            10.00),
+    (33, 'Inyección subcutánea terapéutica',      'Aplicación clínica controlada de vacuna polivalente.',        5.00),
+    (34, 'Coprológico por flotación',             'Examen de descarte de parásitos gastrointestinales.',         10.00),
+    (35, 'Ecografía abdominal',                   'Evaluación de intestino grueso y colon por imagen.',          40.00);
 
 -- ============================================================
 -- 10° INSERT: tratamiento (20 Inserts)
@@ -628,6 +675,21 @@ VALUES (1, '2025-01-10', '2025-01-17', 'Tratamiento Otitis infecciosa', 'Limpiez
         'Mantener horarios fijos para la alimentación.'),
        (20, '2025-04-15', '2025-04-18', 'Plan antiparasitario de amplio espectro',
         'Verificar la eliminación de parásitos en cajas.');
+
+--DATOS NUEVOS (10)
+-- Vinculados a diagnósticos id 26 al 35
+INSERT INTO tratamiento (id_diagnostico, fecha_inicio, fecha_fin, descripcion_t, indicaciones_t)
+VALUES
+       (26, '2026-06-18', '2026-06-25', 'Soporte antiviral y mucolítico felino',       'Mantener en ambiente cálido y limpiar secreción nasal.'),
+       (27, '2026-06-19', '2026-06-26', 'Terapia broncodilatadora ambulatoria',        'Evitar exposición a humo, polvo y ambientes fríos.'),
+       (28, '2026-06-20', '2026-06-27', 'Manejo sintomático de traqueobronquitis',     'Reposo y aislamiento de otros perros por 7 días.'),
+       (29, '2026-06-18', '2026-07-18', 'Control ectoparásitos y DAPP',                'Aplicar pipeta y evitar contacto con pulgas del entorno.'),
+       (30, '2026-06-19', '2026-07-03', 'Tratamiento antimicótico tópico intensivo',   'Baños terapéuticos dejando actuar el champú 10 minutos.'),
+       (31, '2026-06-20', '2026-07-20', 'Terapia antiparasitaria y antiinflamatoria',  'Tratar también el ambiente del hogar con acaricida.'),
+       (32, '2026-06-18', '2026-06-21', 'Monitoreo post-vacunal inmediato',            'Reportar decaimiento, fiebre o vómito al médico.'),
+       (33, '2026-06-19', '2026-06-22', 'Refuerzo inmunológico post-vacunación',       'Evitar paseos públicos por las próximas 48 horas.'),
+       (34, '2026-06-20', '2026-06-27', 'Esquema de soporte digestivo agudo',          'Dieta blanda en porciones pequeñas cada 4 horas.'),
+       (35, '2026-06-21', '2026-07-05', 'Manejo de colitis crónica reagudizada',       'Prohibido dar comida casera o premios fuera de dieta.');
 
 -- ============================================================
 -- 11° INSERT: medicamentos (20 Inserts)
@@ -679,6 +741,19 @@ VALUES (1, 1, 1, '5 gotas por oído afectado', 'Cada 12 horas', 7), -- El trigge
        (19, 15, 5, '1 tableta masticable total', 'Dosis única', 1),
        (20, 16, 19, '1.0 ml suspensión vía oral', 'Cada 12 horas', 10);
 
+--NUEVOS DATOS (10)
+INSERT INTO detalles_tratamientos (id_detalle_tratamiento, id_tratamiento, id_medicamento, dosis_dt, frecuencia_dt, duracion_dias_dt)
+VALUES
+       (21, 62, 2,  '5 ml jarabe vía oral',               'Cada 12 horas', 7), 
+       (22, 63, 9,  '1 tableta vía oral',                 'Cada 12 horas', 7),   
+       (23, 63, 8,  '8 gotas vía oral',                   'Cada 24 horas', 5),   
+       (24, 64, 3,  '1.5 ml vía oral',                    'Cada 12 horas', 7),   
+       (25, 65, 4,  '1 tableta masticable total',          'Dosis única',   1),  
+       (26, 66, 11, 'Baño completo dos veces por semana', 'Cada 3 días',   14),  
+       (27, 67, 16, '1/2 tableta vía oral',               'Cada 24 horas', 14),  
+       (28, 68, 5,  '1 tableta masticable total',          'Dosis única',   1),   
+       (29, 69, 19, '1.0 ml suspensión vía oral',         'Cada 12 horas', 7),   
+       (30, 70, 7,  '1 tableta vía oral',                 'Cada 24 horas', 7);   
 -- ============================================================
 -- 13° INSERT: facturas (20 Inserts)
 -- ============================================================
