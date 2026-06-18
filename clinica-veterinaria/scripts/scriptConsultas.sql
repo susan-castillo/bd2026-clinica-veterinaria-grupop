@@ -78,3 +78,18 @@ ORDER BY
     anio DESC,
     trimestre DESC,
     total_citas DESC;
+
+--6. Motivos de consulta frecuentes, tratamiento y medicamento asignado, unicamente en consultas con estado 'Completada'
+SELECT
+    c.motivo_c AS motivo_consulta,
+    COUNT(DISTINCT c.id_cita) AS casos,
+    COALESCE(STRING_AGG(DISTINCT t.descripcion_t, ' | '), 'Sin tratamiento asignado' ) AS tratamientos_asignados,
+    COALESCE(STRING_AGG(DISTINCT m.nombre_m, ' | '), 'Sin medicamento asignado' ) AS medicamento_recetado
+FROM citas c
+LEFT JOIN diagnosticos d ON d.id_cita = c.id_cita
+LEFT JOIN tratamiento t ON t.id_diagnostico = d.id_diagnostico
+LEFT JOIN detalles_tratamientos dt ON dt.id_tratamiento = t.id_tratamiento 
+LEFT JOIN medicamentos m ON m.id_medicamento = dt.id_medicamento 
+WHERE c.estado_c = 'Completada'
+GROUP BY c.motivo_c
+ORDER BY casos DESC;
