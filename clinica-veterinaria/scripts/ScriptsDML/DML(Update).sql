@@ -136,8 +136,7 @@ WHERE id_mascota = (
 ) RETURNING *;
 
 UPDATE mascotas
-SET edad_m = 5,
-    peso_m = 36.0
+SET peso_m = 36.0
 WHERE id_mascota = (
     SELECT id_mascota
     FROM mascotas

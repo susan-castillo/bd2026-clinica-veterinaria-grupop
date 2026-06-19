@@ -31,7 +31,7 @@ ORDER BY ingresos_totales DESC;
 --3. los propietarios que más dinero han generado mediante citas y facturas.
 SELECT
     p.id_propietario,
-    p.nombre_p || ' ' || p.apellido_p AS propietario,
+    INITCAP(CONCAT(p.nombre_p, ' ', p.apellido_p)) AS propietario,
     COUNT(f.id_factura) AS total_facturas,
     SUM(f.total_f) AS ingresos_generados
 FROM propietarios p
@@ -60,7 +60,7 @@ ORDER BY DATE_PART('day', m.fecha_nacimiento);
 
 --5. Veterinario con mayor número de citas por trimestre
 SELECT
-    v.nombre_v || ' ' || v.apellido_v          AS veterinario,
+    CONCAT(v.nombre_v, ' ' ,v.apellido_v)          AS veterinario,
     DATE_PART('year', c.fecha_c)               AS anio,
     DATE_PART('quarter', c.fecha_c)            AS trimestre,
     COUNT(c.id_cita)                           AS total_citas

@@ -848,14 +848,14 @@ VALUES
 (9, 6, NULL, NULL, NULL, 3, 'Procedimiento Clínico: Raspado de piel superficial', 1, 10.00),
 (10, 6, NULL, 4, 3, NULL, 'Medicamento Recetado: Bravecto Pastilla masticable', 1, 38.00),
 
--- Factura 13 (Cirugía de pierna de Simon - id_factura correlativo real es 13)
+-- Factura 13 (Cirugía de pierna de Simon - Se auto-generarán renglones del 1 al 5)
 (11, 13, 14, NULL, NULL, NULL, 'Costo de atención - Control postoperatorio', 1, 40.00),
 (12, 13, NULL, NULL, NULL, 6, 'Procedimiento Clínico: Radiografía digital de fémur', 1, 40.00),
 (13, 13, NULL, NULL, NULL, 7, 'Procedimiento Quirúrgico: Fijación interna ósea', 1, 350.00),
 (14, 13, NULL, 8, 7, NULL, 'Medicamento Analgésico: Meloxicam Solución gotas', 1, 11.20),
 (15, 13, NULL, 14, 7, NULL, 'Medicamento Antibiótico: Clindamicina 150mg', 1, 16.90),
 
--- Factura 18 (Problema dental felino - id_factura correlativo real es 18)
+-- Factura 18 (Problema dental felino - Se auto-generarán renglones del 1 al 7)
 (16, 18, 31, NULL, NULL, NULL, 'Costo de atención - Vacunación anual base', 1, 25.00),
 (17, 18, NULL, NULL, NULL, 12, 'Procedimiento Dental: Profilaxis ultrasónica', 1, 60.00),
 (18, 18, NULL, NULL, NULL, 14, 'Procedimiento Quirúrgico: Extracción de incisivo', 3, 20.00),
@@ -864,38 +864,47 @@ VALUES
 (21, 21, NULL, NULL, NULL, 31, 'Procedimiento Clínico: Consulta clínica preventiva', 1, 18.00),
 (22, 21, NULL, 21, 31, NULL, 'Medicamento Recetado: Cerenia', 1, 27.50),
 
+-- Factura 22 (Traqueobronquitis de Rocky - Se auto-generarán renglones del 1 al 3)
 (23, 22, 62, NULL, NULL, NULL, 'Costo de atención - Vacunación anual', 1, 25.00),
 (24, 22, NULL, NULL, NULL, 32, 'Procedimiento Clínico: Aplicación de vacuna séxtuple', 1, 30.00),
 (25, 22, NULL, 22, 32, NULL, 'Medicamento Recetado: Apoquel', 1, 48.00),
 
+-- Factura 23 (Alergia de Bella - Se auto-generarán renglones del 1 al 3)
 (26, 23, 63, NULL, NULL, NULL, 'Costo de atención - Evaluación nutricional', 1, 20.00),
 (27, 23, NULL, NULL, NULL, 33, 'Procedimiento Clínico: Evaluación nutricional', 1, 20.00),
 (28, 23, NULL, 30, 33, NULL, 'Medicamento Recetado: Mupirocina Ungüento', 1, 8.90),
 
+-- Factura 24 (Gastroenteritis de Nala - Se auto-generarán renglones del 1 al 3)
 (29, 24, 64, NULL, NULL, NULL, 'Costo de atención - Consulta por gastroenteritis', 1, 25.00),
 (30, 24, NULL, NULL, NULL, 34, 'Procedimiento Clínico: Fluidoterapia intravenosa', 1, 35.00),
 (31, 24, NULL, 29, 34, NULL, 'Medicamento Recetado: Metronidazol Vet', 1, 14.50),
 
+-- Factura 25 (Dermatitis de Tiny - Se auto-generarán renglones del 1 al 3)
 (32, 25, 65, NULL, NULL, NULL, 'Costo de atención - Consulta dermatológica', 1, 30.00),
 (33, 25, NULL, NULL, NULL, 35, 'Procedimiento Clínico: Baño dermatológico medicado', 1, 25.00),
 (34, 25, NULL, 27, 35, NULL, 'Medicamento Recetado: Atopica', 1, 62.00),
 
+-- Factura 26 (Control postquirúrgico de Simon - Se auto-generarán renglones del 1 al 3)
 (35, 26, 66, NULL, NULL, NULL, 'Costo de atención - Control postquirúrgico', 1, 30.00),
 (36, 26, NULL, NULL, NULL, 36, 'Procedimiento Clínico: Control postquirúrgico', 1, 22.00),
 (37, 26, NULL, 28, 36, NULL, 'Medicamento Recetado: Rimadyl', 1, 26.00),
 
+-- Factura 27 (Retiro de suturas de Simon - Se auto-generarán renglones del 1 al 3)
 (38, 27, 67, NULL, NULL, NULL, 'Costo de atención - Retiro de suturas', 1, 20.00),
 (39, 27, NULL, NULL, NULL, 37, 'Procedimiento Clínico: Retiro de suturas', 1, 15.00),
 (40, 27, NULL, 26, 37, NULL, 'Medicamento Recetado: Lactato de Ringer', 1, 6.50),
 
+-- Factura 28 (Consulta preventiva de Max - Se auto-generarán renglones del 1 al 3)
 (41, 28, 68, NULL, NULL, NULL, 'Costo de atención - Consulta preventiva', 1, 20.00),
 (42, 28, NULL, NULL, NULL, 38, 'Procedimiento Clínico: Desparasitación preventiva', 1, 18.00),
 (43, 28, NULL, 23, 38, NULL, 'Medicamento Recetado: Aureomicina Oftálmica', 1, 11.50),
 
+-- Factura 29 (Consulta respiratoria de Rocky - Se auto-generarán renglones del 1 al 3)
 (44, 29, 69, NULL, NULL, NULL, 'Costo de atención - Consulta respiratoria', 1, 25.00),
 (45, 29, NULL, NULL, NULL, 39, 'Procedimiento Clínico: Nebulización', 1, 20.00),
 (46, 29, NULL, 24, 39, NULL, 'Medicamento Recetado: Baytril', 1, 18.75),
 
+-- Factura 30 (Control nutricional de Bella - Se auto-generarán renglones del 1 al 3)
 (47, 30, 70, NULL, NULL, NULL, 'Costo de atención - Control nutricional', 1, 20.00),
 (48, 30, NULL, NULL, NULL, 40, 'Procedimiento Clínico: Control nutricional', 1, 18.00),
 (49, 30, NULL, 25, 40, NULL, 'Medicamento Recetado: Omeprazol Vet', 1, 9.80);
