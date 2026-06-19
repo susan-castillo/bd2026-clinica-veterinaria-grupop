@@ -5,20 +5,21 @@
 	* (1. especies, 2. razas, 3. propietarios, 4. mascotas, 5. especialidades, 6. veterinario, 7. citas) - Adriana
 	* (8. diagnosticos, 9. procedimientos, 10. tratamiento, 11. medicamentos, 12. detalles_tratamientos, 13. facturas, 14. detalles_facturas) - Susan
  ============================================================ */
-SELECT *
-FROM especies;
-SELECT *
-FROM razas;
-SELECT *
-FROM propietarios;
-SELECT *
-FROM mascotas;
-SELECT *
-FROM especialidades;
-SELECT *
-FROM veterinario;
-SELECT *
-FROM citas;
+SELECT * FROM especies;
+SELECT * FROM razas;
+SELECT * FROM propietarios;
+SELECT * FROM mascotas;
+SELECT * FROM especialidades;
+SELECT * FROM veterinario;
+SELECT * FROM citas;
+SELECT * FROM diagnosticos;
+SELECT * FROM procedimientos;
+SELECT * FROM tratamiento;
+SELECT * FROM medicamentos;
+SELECT * FROM detalles_tratamientos;
+SELECT * FROM facturas;
+SELECT * FROM detalles_facturas;
+
 -- ============================================================
 -- 1° INSERT: especies (17)
 -- ============================================================
@@ -40,6 +41,7 @@ VALUES ('Can', 'Mamífero doméstico de la familia Canidae, comúnmente conocido
        ('Primate', 'Orden de mamíferos que incluye monos y simios, de alta inteligencia.'),
        ('Marsupial', 'Mamífero que da a luz crías inmaduras y las desarrolla en una bolsa ventral.'),
        ('Arácnido', 'Artrópodo de ocho patas, incluye arañas y escorpiones.');
+
 
 -- ============================================================
 -- 2° INSERT: razas (61)
@@ -158,6 +160,7 @@ VALUES ((SELECT id_especie FROM especies WHERE nombre_e = 'Arácnido'), 'Taránt
        ((SELECT id_especie FROM especies WHERE nombre_e = 'Arácnido'), 'Escorpión Emperador'),
        ((SELECT id_especie FROM especies WHERE nombre_e = 'Arácnido'), 'Tarántula Patas Rojas');
 
+
 -- ============================================================
 -- 3° INSERT: propietarios (20)
 -- ============================================================
@@ -204,6 +207,7 @@ VALUES ('01234567-8', 'Adriana', 'Mejía', 'F', '7123-4567', '2234-5678', 'adria
        ('10123456-7', 'Daniela', 'Ortiz', 'F', '7492-3456', '2323-4567', 'daniela.ortiz@gmail.com',
         'Colonia Escalón, San Salvador');
 
+
 -- ============================================================
 -- 4° INSERT: mascotas (71)
 -- Can (10), Felino (10), Ave (10), Roedor (10), Conejo (10),
@@ -211,142 +215,143 @@ VALUES ('01234567-8', 'Adriana', 'Mejía', 'F', '7123-4567', '2234-5678', 'adria
 -- Porcino (3), Ovejas (3)
 -- Son 2 por cada raza común y solo 1 por cada raza menos comun
 -- ============================================================
-INSERT INTO mascotas (id_propietario, id_raza, nombre_m, fecha_nacimiento, edad_m, sexo_m, peso_m, tamanio_m)
+INSERT INTO mascotas (id_propietario, id_raza, nombre_m, fecha_nacimiento, sexo_m, peso_m, tamanio_m)
 VALUES
 -- Can - Labrador Retriever (2)
-(1, 1, 'Max', '2021-03-15', 4, 'Macho', 30.5, 'Grande'),
-(2, 1, 'Luna', '2020-07-22', 5, 'Hembra', 28.0, 'Grande'),
+(1, 1, 'Max', '2021-03-15', 'Macho', 30.5, 'Grande'),
+(2, 1, 'Luna', '2020-07-22', 'Hembra', 28.0, 'Grande'),
 
 -- Can - Pastor Alemán (2)
-(3, 2, 'Rex', '2019-11-10', 6, 'Macho', 35.0, 'Grande'),
-(4, 2, 'Nala', '2022-01-05', 3, 'Hembra', 29.5, 'Grande'),
+(3, 2, 'Rex', '2019-11-10', 'Macho', 35.0, 'Grande'),
+(4, 2, 'Nala', '2022-01-05', 'Hembra', 29.5, 'Grande'),
 
 -- Can - Chihuahua (2)
-(5, 3, 'Tiny', '2023-05-18', 2, 'Macho', 2.1, 'Pequeño'),
-(6, 3, 'Bella', '2022-09-30', 3, 'Hembra', 1.8, 'Pequeño'),
+(5, 3, 'Tiny', '2023-05-18', 'Macho', 2.1, 'Pequeño'),
+(6, 3, 'Bella', '2022-09-30', 'Hembra', 1.8, 'Pequeño'),
 
 -- Can - Golden Retriever (2)
-(7, 4, 'Buddy', '2021-06-12', 4, 'Macho', 32.0, 'Grande'),
-(8, 4, 'Daisy', '2020-12-01', 5, 'Hembra', 27.5, 'Grande'),
+(7, 4, 'Buddy', '2021-06-12', 'Macho', 32.0, 'Grande'),
+(8, 4, 'Daisy', '2020-12-01', 'Hembra', 27.5, 'Grande'),
 
 -- Can - Bulldog Francés (2)
-(9, 5, 'Gordo', '2022-04-20', 3, 'Macho', 12.0, 'Mediano'),
-(10, 5, 'Coco', '2023-02-14', 2, 'Hembra', 10.5, 'Mediano'),
+(9, 5, 'Gordo', '2022-04-20', 'Macho', 12.0, 'Mediano'),
+(10, 5, 'Coco', '2023-02-14', 'Hembra', 10.5, 'Mediano'),
 
 -- Felino - Siamés (2)
-(11, 6, 'Milo', '2021-08-03', 4, 'Macho', 4.5, 'Mediano'),
-(12, 6, 'Nube', '2022-11-25', 3, 'Hembra', 3.8, 'Mediano'),
+(11, 6, 'Milo', '2021-08-03', 'Macho', 4.5, 'Mediano'),
+(12, 6, 'Nube', '2022-11-25', 'Hembra', 3.8, 'Mediano'),
 
 -- Felino - Persa (2)
-(13, 7, 'Pelusa', '2020-03-17', 5, 'Hembra', 4.2, 'Mediano'),
-(14, 7, 'Simon', '2019-07-09', 6, 'Macho', 5.0, 'Mediano'),
+(13, 7, 'Pelusa', '2020-03-17', 'Hembra', 4.2, 'Mediano'),
+(14, 7, 'Simon', '2019-07-09', 'Macho', 5.0, 'Mediano'),
 
 -- Felino - Bengalí (2)
-(15, 8, 'Tigre', '2022-06-01', 3, 'Macho', 5.5, 'Mediano'),
-(16, 8, 'Mia', '2023-01-19', 2, 'Hembra', 4.0, 'Mediano'),
+(15, 8, 'Tigre', '2022-06-01', 'Macho', 5.5, 'Mediano'),
+(16, 8, 'Mia', '2023-01-19', 'Hembra', 4.0, 'Mediano'),
 
 -- Felino - Maine Coon (2)
-(17, 9, 'Gigante', '2020-09-14', 5, 'Macho', 8.5, 'Grande'),
-(18, 9, 'Reina', '2021-12-30', 4, 'Hembra', 6.5, 'Grande'),
+(17, 9, 'Gigante', '2020-09-14', 'Macho', 8.5, 'Grande'),
+(18, 9, 'Reina', '2021-12-30', 'Hembra', 6.5, 'Grande'),
 
 -- Felino - Angora (2)
-(19, 10, 'Blanca', '2022-03-08', 3, 'Hembra', 3.5, 'Mediano'),
-(20, 10, 'Fluffy', '2021-10-22', 4, 'Macho', 4.0, 'Mediano'),
+(19, 10, 'Blanca', '2022-03-08', 'Hembra', 3.5, 'Mediano'),
+(20, 10, 'Fluffy', '2021-10-22', 'Macho', 4.0, 'Mediano'),
 
 -- Ave - Loro (2)
-(1, 11, 'Paco', '2018-05-11', 7, 'Macho', 0.40, 'Pequeño'),
-(2, 11, 'Verde', '2019-08-23', 6, 'Hembra', 0.30, 'Pequeño'),
+(1, 11, 'Paco', '2018-05-11', 'Macho', 0.40, 'Pequeño'),
+(2, 11, 'Verde', '2019-08-23', 'Hembra', 0.30, 'Pequeño'),
 
 -- Ave - Canario (2)
-(3, 12, 'Sol', '2022-02-14', 3, 'Macho', 0.02, 'Pequeño'),
-(4, 12, 'Pio', '2023-04-01', 2, 'Hembra', 0.02, 'Pequeño'),
+(3, 12, 'Sol', '2022-02-14', 'Macho', 0.02, 'Pequeño'),
+(4, 12, 'Pio', '2023-04-01', 'Hembra', 0.02, 'Pequeño'),
 
 -- Ave - Cacatúa (2)
-(5, 13, 'Nieve', '2020-11-05', 5, 'Hembra', 0.35, 'Pequeño'),
-(6, 13, 'Rocky', '2019-03-28', 6, 'Macho', 0.40, 'Pequeño'),
+(5, 13, 'Nieve', '2020-11-05', 'Hembra', 0.35, 'Pequeño'),
+(6, 13, 'Rocky', '2019-03-28', 'Macho', 0.40, 'Pequeño'),
 
 -- Ave - Periquito (2)
-(7, 14, 'Azul', '2023-06-10', 2, 'Macho', 0.03, 'Pequeño'),
-(8, 14, 'Verdecito', '2022-08-15', 3, 'Hembra', 0.03, 'Pequeño'),
+(7, 14, 'Azul', '2023-06-10', 'Macho', 0.03, 'Pequeño'),
+(8, 14, 'Verdecito', '2022-08-15', 'Hembra', 0.03, 'Pequeño'),
 
 -- Ave - Agapornis (2)
-(9, 15, 'Amor', '2022-01-30', 3, 'Hembra', 0.05, 'Pequeño'),
-(10, 15, 'Pico', '2021-07-17', 4, 'Macho', 0.05, 'Pequeño'),
+(9, 15, 'Amor', '2022-01-30', 'Hembra', 0.05, 'Pequeño'),
+(10, 15, 'Pico', '2021-07-17', 'Macho', 0.05, 'Pequeño'),
 
 -- Roedor - Hámster Sirio (2)
-(11, 16, 'Bolita', '2023-03-12', 2, 'Macho', 0.15, 'Pequeño'),
-(12, 16, 'Canela', '2022-10-05', 3, 'Hembra', 0.13, 'Pequeño'),
+(11, 16, 'Bolita', '2023-03-12', 'Macho', 0.15, 'Pequeño'),
+(12, 16, 'Canela', '2022-10-05', 'Hembra', 0.13, 'Pequeño'),
 
 -- Roedor - Cobaya (2)
-(13, 17, 'Manchas', '2021-05-20', 4, 'Macho', 1.10, 'Pequeño'),
-(14, 17, 'Trebol', '2022-07-14', 3, 'Hembra', 0.90, 'Pequeño'),
+(13, 17, 'Manchas', '2021-05-20', 'Macho', 1.10, 'Pequeño'),
+(14, 17, 'Trebol', '2022-07-14', 'Hembra', 0.90, 'Pequeño'),
 
 -- Roedor - Chinchilla (2)
-(15, 18, 'Gris', '2020-04-08', 5, 'Macho', 0.60, 'Pequeño'),
-(16, 18, 'Suave', '2021-09-19', 4, 'Hembra', 0.50, 'Pequeño'),
+(15, 18, 'Gris', '2020-04-08', 'Macho', 0.60, 'Pequeño'),
+(16, 18, 'Suave', '2021-09-19', 'Hembra', 0.50, 'Pequeño'),
 
 -- Roedor - Rata Fancy (2)
-(17, 19, 'Raton', '2023-01-25', 2, 'Macho', 0.35, 'Pequeño'),
-(18, 19, 'Noche', '2022-06-30', 3, 'Hembra', 0.28, 'Pequeño'),
+(17, 19, 'Raton', '2023-01-25', 'Macho', 0.35, 'Pequeño'),
+(18, 19, 'Noche', '2022-06-30', 'Hembra', 0.28, 'Pequeño'),
 
 -- Roedor - Jerbo (2)
-(19, 20, 'Salto', '2023-05-03', 2, 'Macho', 0.08, 'Pequeño'),
-(20, 20, 'Arena', '2022-11-11', 3, 'Hembra', 0.07, 'Pequeño'),
+(19, 20, 'Salto', '2023-05-03', 'Macho', 0.08, 'Pequeño'),
+(20, 20, 'Arena', '2022-11-11', 'Hembra', 0.07, 'Pequeño'),
 
 -- Conejo - Holandés (2)
-(1, 21, 'Dutch', '2021-02-18', 4, 'Macho', 2.0, 'Pequeño'),
-(2, 21, 'Mochi', '2022-04-27', 3, 'Hembra', 1.8, 'Pequeño'),
+(1, 21, 'Dutch', '2021-02-18', 'Macho', 2.0, 'Pequeño'),
+(2, 21, 'Mochi', '2022-04-27', 'Hembra', 1.8, 'Pequeño'),
 
 -- Conejo - Angora (2)
-(3, 22, 'Algodon', '2020-08-09', 5, 'Macho', 3.5, 'Mediano'),
-(4, 22, 'Lana', '2021-11-14', 4, 'Hembra', 3.2, 'Mediano'),
+(3, 22, 'Algodon', '2020-08-09', 'Macho', 3.5, 'Mediano'),
+(4, 22, 'Lana', '2021-11-14', 'Hembra', 3.2, 'Mediano'),
 
 -- Conejo - Rex (2)
-(5, 23, 'Terciopelo', '2022-07-21', 3, 'Macho', 4.0, 'Mediano'),
-(6, 23, 'Suavecito', '2023-03-05', 2, 'Hembra', 3.5, 'Mediano'),
+(5, 23, 'Terciopelo', '2022-07-21', 'Macho', 4.0, 'Mediano'),
+(6, 23, 'Suavecito', '2023-03-05', 'Hembra', 3.5, 'Mediano'),
 
 -- Conejo - Lionhead (2)
-(7, 24, 'Melena', '2022-09-16', 3, 'Macho', 1.8, 'Pequeño'),
-(8, 24, 'Leon', '2021-04-02', 4, 'Hembra', 1.6, 'Pequeño'),
+(7, 24, 'Melena', '2022-09-16', 'Macho', 1.8, 'Pequeño'),
+(8, 24, 'Leon', '2021-04-02', 'Hembra', 1.6, 'Pequeño'),
 
 -- Conejo - Mini Lop (2)
-(9, 25, 'Orejon', '2023-02-28', 2, 'Macho', 2.2, 'Pequeño'),
-(10, 25, 'Floppy', '2022-06-13', 3, 'Hembra', 2.0, 'Pequeño'),
+(9, 25, 'Orejon', '2023-02-28', 'Macho', 2.2, 'Pequeño'),
+(10, 25, 'Floppy', '2022-06-13', 'Hembra', 2.0, 'Pequeño'),
 
 -- Reptiles (1 c/u)
-(11, 26, 'Spike', '2021-01-15', 4, 'Macho', 0.45, 'Mediano'),
-(12, 27, 'Spot', '2022-03-22', 3, 'Hembra', 0.07, 'Pequeño'),
-(13, 28, 'Verde', '2020-06-30', 5, 'Macho', 3.50, 'Grande'),
+(11, 26, 'Spike', '2021-01-15', 'Macho', 0.45, 'Mediano'),
+(12, 27, 'Spot', '2022-03-22', 'Hembra', 0.07, 'Pequeño'),
+(13, 28, 'Verde', '2020-06-30', 'Macho', 3.50, 'Grande'),
 
 -- Peces (1 c/u)
-(14, 29, 'Escarlata', '2023-01-10', 2, 'Macho', 0.01, 'Pequeño'),
-(15, 30, 'Naranja', '2022-05-18', 3, 'Hembra', 0.05, 'Pequeño'),
-(16, 31, 'Colores', '2023-04-05', 2, 'Macho', 0.01, 'Pequeño'),
+(14, 29, 'Escarlata', '2023-01-10', 'Macho', 0.01, 'Pequeño'),
+(15, 30, 'Naranja', '2022-05-18', 'Hembra', 0.05, 'Pequeño'),
+(16, 31, 'Colores', '2023-04-05', 'Macho', 0.01, 'Pequeño'),
 
 -- Hurones (1 c/u)
-(17, 32, 'Bandido', '2021-09-07', 4, 'Macho', 1.2, 'Pequeño'),
-(18, 33, 'Pelin', '2022-12-19', 3, 'Hembra', 0.9, 'Pequeño'),
-(19, 34, 'Blanco', '2023-02-01', 2, 'Macho', 1.0, 'Pequeño'),
+(17, 32, 'Bandido', '2021-09-07', 'Macho', 1.2, 'Pequeño'),
+(18, 33, 'Pelin', '2022-12-19', 'Hembra', 0.9, 'Pequeño'),
+(19, 34, 'Blanco', '2023-02-01', 'Macho', 1.0, 'Pequeño'),
 
 -- Anfibios (1 c/u)
-(20, 35, 'Axo', '2022-08-14', 3, 'Macho', 0.3, 'Pequeño'),
-(1, 36, 'Croac', '2021-11-28', 4, 'Hembra', 0.08, 'Pequeño'),
-(2, 37, 'Tigresa', '2020-07-03', 5, 'Hembra', 0.12, 'Pequeño'),
+(20, 35, 'Axo', '2022-08-14', 'Macho', 0.3, 'Pequeño'),
+(1, 36, 'Croac', '2021-11-28', 'Hembra', 0.08, 'Pequeño'),
+(2, 37, 'Tigresa', '2020-07-03', 'Hembra', 0.12, 'Pequeño'),
 
 -- Équidos (1 c/u)
-(3, 38, 'Trueno', '2018-03-25', 7, 'Macho', 450, 'Grande'),
-(4, 39, 'Pony', '2019-10-11', 6, 'Hembra', 180, 'Mediano'),
-(5, 40, 'Burrito', '2017-06-16', 8, 'Macho', 200, 'Mediano'),
+(3, 38, 'Trueno', '2018-03-25', 'Macho', 450, 'Grande'),
+(4, 39, 'Pony', '2019-10-11', 'Hembra', 180, 'Mediano'),
+(5, 40, 'Burrito', '2017-06-16', 'Macho', 200, 'Mediano'),
 
 -- Porcinos (1 c/u)
-(6, 41, 'Chanchito', '2021-04-14', 4, 'Macho', 45, 'Mediano'),
-(7, 42, 'Rosado', '2020-01-22', 5, 'Hembra', 120, 'Grande'),
-(8, 43, 'Oink', '2019-08-30', 6, 'Macho', 150, 'Grande'),
+(6, 41, 'Chanchito', '2021-04-14', 'Macho', 45, 'Mediano'),
+(7, 42, 'Rosado', '2020-01-22', 'Hembra', 120, 'Grande'),
+(8, 43, 'Oink', '2019-08-30', 'Macho', 150, 'Grande'),
 
 -- Ovejas (1 c/u)
-(9, 44, 'Lana', '2020-11-17', 5, 'Hembra', 55, 'Mediano'),
-(10, 45, 'Negrita', '2021-03-04', 4, 'Hembra', 70, 'Mediano'),
-(11, 46, 'Borrego', '2022-07-09', 3, 'Macho', 65, 'Mediano');
+(9, 44, 'Lana', '2020-11-17', 'Hembra', 55, 'Mediano'),
+(10, 45, 'Negrita', '2021-03-04', 'Hembra', 70, 'Mediano'),
+(11, 46, 'Borrego', '2022-07-09', 'Macho', 65, 'Mediano');
+
 
 -- ============================================================
 -- 5° INSERT: especialidades (20)
@@ -372,6 +377,7 @@ VALUES ('Medicina General Veterinaria', 'Atención médica integral para animale
        ('Urgencias Veterinarias', 'Atención de emergencias médicas y quirúrgicas.'),
        ('Diagnóstico por Imágenes', 'Radiografías, ecografías y otros estudios diagnósticos.'),
        ('Fisioterapia y Rehabilitación', 'Recuperación funcional tras lesiones o cirugías.');
+
 
 -- ============================================================
 -- 6° INSERT: veterinario (40)
@@ -478,6 +484,7 @@ VALUES ((SELECT id_especialidad FROM especialidades WHERE nombre_esp = 'Medicina
        ((SELECT id_especialidad FROM especialidades WHERE nombre_esp = 'Fisioterapia y Rehabilitación'), 'Alejandra',
         'Escobar', '7000-0040', 'alejandra.escobar@veterinaria.com');
 
+       
 -- ============================================================
 -- 7° INSERT: citas (50)
 -- 35 Completadas, 5 En curso, 5 Cancelada, 5 Programada
@@ -493,7 +500,6 @@ VALUES (1, 1, '2025-01-10 09:00:00', 'Consulta general', 'Completada', 20.00),
        (8, 8, '2025-02-15 13:30:00', 'Revisión general', 'Completada', 20.00),
        (9, 9, '2025-02-20 08:00:00', 'Problema respiratorio', 'Completada', 35.00),
        (10, 10, '2025-02-25 16:00:00', 'Control nutricional', 'Completada', 25.00),
-
        (11, 11, '2025-03-02 09:00:00', 'Vacunación de refuerzo', 'Completada', 25.00),
        (12, 12, '2025-03-06 11:00:00', 'Consulta general', 'Completada', 20.00),
        (13, 13, '2025-03-10 14:00:00', 'Revisión ocular', 'Completada', 30.00),
@@ -504,7 +510,6 @@ VALUES (1, 1, '2025-01-10 09:00:00', 'Consulta general', 'Completada', 20.00),
        (18, 18, '2025-04-05 11:45:00', 'Control de peso', 'Completada', 18.00),
        (19, 19, '2025-04-10 10:00:00', 'Consulta por alergia', 'Completada', 35.00),
        (20, 20, '2025-04-15 16:30:00', 'Desparasitación', 'Completada', 15.00),
-
        (21, 21, '2025-04-20 09:00:00', 'Vacunación anual', 'Completada', 25.00),
        (22, 22, '2025-04-25 14:30:00', 'Consulta general', 'Completada', 20.00),
        (23, 23, '2025-05-01 10:15:00', 'Chequeo preventivo', 'Completada', 22.00),
@@ -515,13 +520,11 @@ VALUES (1, 1, '2025-01-10 09:00:00', 'Consulta general', 'Completada', 20.00),
        (28, 28, '2025-05-25 16:00:00', 'Control nutricional', 'Completada', 25.00),
        (29, 29, '2025-06-01 08:30:00', 'Evaluación médica', 'Completada', 28.00),
        (30, 30, '2025-06-05 14:00:00', 'Consulta preventiva', 'Completada', 20.00),
-
        (31, 31, '2025-06-10 10:00:00', 'Vacunación anual', 'Completada', 25.00),
        (32, 32, '2025-06-15 15:30:00', 'Control de peso', 'Completada', 18.00),
        (33, 33, '2025-06-20 09:15:00', 'Chequeo preventivo', 'Completada', 22.00),
        (34, 34, '2025-06-25 11:45:00', 'Consulta general', 'Completada', 20.00),
        (35, 35, '2025-06-28 14:30:00', 'Revisión post tratamiento', 'Completada', 30.00),
-
        (36, 1, '2026-06-01 09:00:00', 'Tratamiento en seguimiento', 'En curso', 35.00),
        (37, 2, '2026-06-02 11:00:00', 'Recuperación postoperatoria', 'En curso', 50.00),
        (38, 3, '2026-06-03 15:00:00', 'Control especializado', 'En curso', 40.00),
@@ -532,27 +535,32 @@ VALUES (1, 1, '2025-01-10 09:00:00', 'Consulta general', 'Completada', 20.00),
        (43, 8, '2025-09-05 14:00:00', 'Reprogramación solicitada', 'Cancelada', 0.00),
        (44, 9, '2025-10-20 10:30:00', 'Ausencia del propietario', 'Cancelada', 0.00),
        (45, 10, '2025-11-12 15:00:00', 'Cancelación administrativa', 'Cancelada', 0.00),
-
        (46, 11, '2026-07-10 09:00:00', 'Vacunación programada', 'Programada', 25.00),
        (47, 12, '2026-07-22 14:00:00', 'Chequeo preventivo programado', 'Programada', 20.00),
        (48, 13, '2026-08-05 10:30:00', 'Control de peso programado', 'Programada', 18.00),
        (49, 14, '2026-08-18 16:00:00', 'Consulta de seguimiento', 'Programada', 30.00),
-       (50, 15, '2026-08-30 11:00:00', 'Evaluación médica programada', 'Programada', 22.00);
-       
-       -- DATOS NUEVOS (10)
-INSERT INTO citas (id_mascota, id_veterinario, fecha_c, motivo_c, estado_c, costo_c)
-VALUES
- 	   (3,  12, '2026-06-18 09:00:00', 'Problema respiratorio',   'Completada', 35.00),
-   	   (17, 25, '2026-06-19 10:30:00', 'Problema respiratorio',   'Completada', 35.00),
-  	   (42, 38, '2026-06-20 11:00:00', 'Problema respiratorio',   'Completada', 35.00),
-  	   (8,   7, '2026-06-18 14:00:00', 'Consulta dermatológica',  'Completada', 30.00),
-  	   (29, 19, '2026-06-19 15:30:00', 'Consulta dermatológica',  'Completada', 30.00),
-  	   (50, 33, '2026-06-20 09:45:00', 'Consulta dermatológica',  'Completada', 30.00),
-  	   (11, 40, '2026-06-18 08:00:00', 'Vacunación anual',        'Completada', 25.00),
-  	   (23,  2, '2026-06-19 13:00:00', 'Vacunación anual',        'Completada', 25.00),
-  	   (36, 15, '2026-06-20 16:00:00', 'Problema digestivo',      'Completada', 32.00),
-   	   (44, 28, '2026-06-21 10:00:00', 'Problema digestivo',      'Completada', 32.00);
- 
+       (50, 15, '2026-08-30 11:00:00', 'Evaluación médica programada', 'Programada', 22.00),
+       (3,  2, '2026-06-18 09:00:00', 'Problema respiratorio',   'Completada', 35.00),
+       (17, 2, '2026-06-19 10:30:00', 'Problema respiratorio',   'Completada', 35.00),
+       (42, 2, '2026-06-20 11:00:00', 'Problema respiratorio',   'Completada', 35.00),
+       (8,  7, '2026-06-18 14:00:00', 'Consulta dermatológica',  'Completada', 30.00),
+       (29, 7, '2026-06-19 15:30:00', 'Consulta dermatológica',  'Completada', 30.00),
+       (50, 7, '2026-06-20 09:45:00', 'Consulta dermatológica',  'Completada', 30.00),
+       (11, 2, '2026-06-18 08:00:00', 'Vacunación anual',        'Completada', 25.00),
+       (23, 2, '2026-06-19 13:00:00', 'Vacunación anual',        'Completada', 25.00),
+       (36,15, '2026-06-20 16:00:00', 'Problema digestivo',      'Completada', 32.00),
+       (44,15, '2026-06-21 10:00:00', 'Problema digestivo',      'Completada', 32.00),
+       (5,  2, '2026-01-08 09:00:00', 'Chequeo general',         'Completada', 20.00),
+       (14, 2, '2026-02-15 10:30:00', 'Vacunación anual',        'Completada', 25.00),
+       (22, 2, '2026-03-22 14:00:00', 'Control de peso',         'En curso',   18.00),
+       (31, 7, '2026-04-10 11:15:00', 'Problema digestivo',      'Completada', 32.00),
+       (40, 7, '2026-05-18 15:00:00', 'Consulta dermatológica',  'Completada', 30.00),
+       (18,15, '2026-07-06 08:30:00', 'Revisión general',        'En curso',   20.00),
+       (27, 2, '2026-08-12 13:45:00', 'Control postoperatorio',  'Completada', 40.00),
+       (35, 7, '2026-09-25 16:00:00', 'Chequeo preventivo',      'Completada', 22.00),
+       (45, 2, '2026-10-14 09:20:00', 'Problema respiratorio',   'Completada', 35.00),
+       (50, 2, '2026-11-28 10:40:00', 'Control nutricional',     'En curso',   25.00);
+	 
 
 -- ============================================================
 -- 8° INSERT: diagnosticos (20 Inserts)
@@ -578,118 +586,120 @@ VALUES (1, 'Otitis externa bilateral', 'Presencia de ácaros y secreción de mal
        (17, 'Revisión periódica clínica', 'Sin alteraciones aparentes en sistemas.', '2025-04-01'),
        (18, 'Control de peso semestral', 'Evolución favorable en pérdida de peso.', '2025-04-05'),
        (19, 'Dermatitis por Malassezia', 'Infección micótica secundaria en pliegues.', '2025-04-10'),
-       (20, 'Desparasitación cuatrimestral', 'Tratamiento preventivo antiparasitario.', '2025-04-15');
+       (20, 'Desparasitación cuatrimestral', 'Tratamiento preventivo antiparasitario.', '2025-04-15'),
+   	   (51, 'Infección respiratoria felina (Calicivirus)', 'Estornudos frecuentes y secreción nasal serosa bilateral.', '2026-06-14'),
+       (52, 'Bronquitis aguda canina', 'Tos productiva persistente con sibilancias leves al auscultarse.',  '2026-06-10'),
+       (53, 'Traqueobronquitis infecciosa (Tos de las perreras)','Tos seca en accesos, sin fiebre asociada al momento del examen.', '2026-06-01'),
+       (54, 'Dermatitis alérgica por pulga (DAPP)', 'Lesiones eritematosas en región inguinal y base de la cola.', '2026-06-08'),
+       (55, 'Dermatitis por Malassezia', 'Infección micótica con prurito intenso en pliegues cutáneos.', '2026-06-09'),
+       (56, 'Sarna sarcóptica', 'Infestación moderada con costras en pabellones auriculares.', '2026-06-02'),
+       (57, 'Paciente apto para vacunación anual', 'Sin hallazgos clínicos anormales previos a la inmunización.', '2026-06-08'),
+       (58, 'Refuerzo de vacuna polivalente canina', 'Titer bajo detectado en control previo; revacunación indicada.', '2026-06-14'),
+       (59, 'Gastroenteritis aguda', 'Vómitos y diarrea de 48 horas de evolución, hidratación conservada.','2026-06-12'),
+       (60, 'Colitis crónica reagudizada', 'Heces con moco y sangre fresca; dieta blanda estricta indicada.', '2026-06-11'),
+	   (61, 'Mascota en buen estado general.', 'Continuar con controles preventivos cada 6 meses.', '2026-06-15'),
+	   (62, 'Esquema de vacunación completado.', 'Aplicar próxima vacuna según calendario.', '2026-06-15'),
+	   (63, 'Leve sobrepeso detectado.', 'Dieta balanceada y ejercicio diario durante 30 minutos.', '2026-06-16'),
+	   (64, 'Gastroenteritis leve.', 'Dieta blanda y medicación durante 5 días.', '2026-06-16'),
+	   (65, 'Dermatitis alérgica.', 'Aplicar crema dermatológica y evitar alérgenos.', '2026-06-16'),
+	   (66, 'Recuperación favorable después de cirugía.', 'Reposo y revisión en 7 días.', '2026-06-17'),
+	   (67, 'Cicatrización adecuada.', 'Retirar puntos en la próxima consulta.', '2026-06-17'),
+	   (68, 'Sin hallazgos clínicos importantes.', 'Mantener controles preventivos.', '2026-06-17'),
+	   (69, 'Infección respiratoria leve.', 'Antibióticos y reposo por una semana.', '2026-06-18'),
+	   (70, 'Estado nutricional aceptable.', 'Mantener dieta recomendada y seguimiento mensual.', '2026-06-18');
 
---DATOS NUEVOS (10) 
-
-INSERT INTO diagnosticos (id_cita, descripcion_d, observaciones_d, fecha_d)
-VALUES
-   	   (52, 'Infección respiratoria felina (Calicivirus)',      'Estornudos frecuentes y secreción nasal serosa bilateral.',         '2026-06-14'),
-       (53, 'Bronquitis aguda canina',                          'Tos productiva persistente con sibilancias leves al auscultarse.',  '2026-06-10'),
-       (54, 'Traqueobronquitis infecciosa (Tos de las perreras)','Tos seca en accesos, sin fiebre asociada al momento del examen.',  '2026-06-01'),
-       (55, 'Dermatitis alérgica por pulga (DAPP)',              'Lesiones eritematosas en región inguinal y base de la cola.',      '2026-06-08'),
-       (56, 'Dermatitis por Malassezia',                        'Infección micótica con prurito intenso en pliegues cutáneos.',     '2026-06-09'),
-       (57, 'Sarna sarcóptica',                                 'Infestación moderada con costras en pabellones auriculares.',      '2026-06-02'),
-       (58, 'Paciente apto para vacunación anual',              'Sin hallazgos clínicos anormales previos a la inmunización.',      '2026-06-08'),
-       (59, 'Refuerzo de vacuna polivalente canina',            'Titer bajo detectado en control previo; revacunación indicada.',   '2026-06-14'),
-       (60, 'Gastroenteritis aguda',                            'Vómitos y diarrea de 48 horas de evolución, hidratación conservada.','2026-06-12'),
-       (61, 'Colitis crónica reagudizada',                      'Heces con moco y sangre fresca; dieta blanda estricta indicada.', '2026-06-11');
 
 -- ============================================================
 -- 9° INSERT: procedimientos (20 Inserts)
+-- Vinculados a diagnósticos id 1 al 20
 -- ============================================================
 INSERT INTO procedimientos (id_diagnostico, nombre_p, descripcion_p, costo_p)
-VALUES (1, 'Limpieza ótica profunda', 'Lavado clínico de conducto auditivo externo.', 15.00),
-       (4, 'Fluidoterapia ambulatoria', 'Administración de solución Hartman intravenosa.', 25.00),
-       (6, 'Raspado de piel superficial', 'Toma de muestra para descarte de ectoparásitos.', 10.00),
-       (9, 'Prueba rápida Triple Felina', 'Descarte de Leucemia, SIDA y Panleucopenia.', 35.00),
-       (13, 'Prueba de Fluoresceína', 'Tinción ocular para evaluar extensión de úlcera.', 8.00),
-       (14, 'Radiografía digital', 'Dos proyecciones ortogonales de fémur izquierdo.', 40.00),
-       (14, 'Cirugía Ortopédica - Osteosíntesis', 'Fijación de fémur mediante placa y tornillos.', 350.00),
-       (16, 'Ecocardiograma Doppler', 'Evaluación dimensional y flujo de cámaras cardíacas.', 65.00),
-       (19, 'Citología de piel', 'Tinción e identificación microscópica de levaduras.', 12.00),
-       (5, 'Hemograma completo de control', 'Evaluación de rutina de células sanguíneas.', 15.00),
-       (7, 'Coprológico por flotación', 'Examen de descarte de parásitos gastrointestinales.', 10.00),
-       (8, 'Limpieza dental preventiva básica', 'Eliminación manual de placa dental incipiente.', 20.00),
-       (10, 'Medición de presión arterial', 'Monitoreo preventivo cardiovascular.', 15.00),
-       (11, 'Inyección subcutánea terapéutica', 'Aplicación clínica controlada.', 5.00),
-       (12, 'Limpieza ocular con suero', 'Lavado antiséptico de sacos conjuntivales.', 8.00),
-       (15, 'Perfil geriátrico bioquímico', 'Análisis de funcionamiento renal y hepático.', 35.00),
-       (17, 'Examen general de orina', 'Toma de muestra y lectura de Sedimento.', 12.00),
-       (18, 'Medición de glucosa en sangre', 'Monitoreo rápido con glucómetro portátil.', 6.00),
-       (20, 'Aplicación de spot-on clínico', 'Colocación profesional de antiparasitario.', 5.00),
-       (2, 'Revisión física pre-vacunación', 'Exploración de ganglios y temperatura.', 10.00);
-
---DATOS NUEVOS(10)
---- Vinculados a diagnósticos id 26 al 35 ---
-
-SELECT id_diagnostico, descripcion_d FROM diagnosticos ORDER BY id_diagnostico DESC LIMIT 15;
-
-INSERT INTO procedimientos (id_diagnostico, nombre_p, descripcion_p, costo_p)
 VALUES
-    (26, 'Radiografía de tórax',                'Dos proyecciones para evaluación de campo pulmonar.',         30.00),
-    (27, 'Auscultación cardiopulmonar ampliada', 'Evaluación de ruidos pulmonares con estetoscopio digital.',   12.00),
-    (28, 'Prueba rápida de Moquillo-Parvovirus', 'Descarte de agentes virales respiratorios caninos.',          28.00),
-    (29, 'Raspado de piel superficial',          'Toma de muestra para identificación de ectoparásitos.',       10.00),
-    (30, 'Citología de piel',                    'Tinción e identificación microscópica de levaduras y cocos.', 12.00),
-    (31, 'Prueba de alergia intradérmica',        'Evaluación de hipersensibilidad cutánea por antígenos.',      45.00),
-    (32, 'Revisión física pre-vacunación',        'Exploración de ganglios, temperatura y mucosas.',            10.00),
-    (33, 'Inyección subcutánea terapéutica',      'Aplicación clínica controlada de vacuna polivalente.',        5.00),
-    (34, 'Coprológico por flotación',             'Examen de descarte de parásitos gastrointestinales.',         10.00),
-    (35, 'Ecografía abdominal',                   'Evaluación de intestino grueso y colon por imagen.',          40.00);
-
+    (1,  'Limpieza ótica profunda', 'Lavado clínico de conducto auditivo externo.', 15.00),
+    (2,  'Revisión física pre-vacunación', 'Exploración de ganglios y temperatura.', 10.00),
+    (4,  'Fluidoterapia ambulatoria', 'Administración de solución Hartman intravenosa.', 25.00),
+    (5,  'Hemograma completo de control', 'Evaluación de rutina de células sanguíneas.', 15.00),
+    (6,  'Raspado de piel superficial', 'Toma de muestra para descarte de ectoparásitos.', 10.00),
+    (7,  'Coprológico por flotación', 'Examen de descarte de parásitos gastrointestinales.', 10.00),
+    (8,  'Limpieza dental preventiva básica', 'Eliminación manual de placa dental incipiente.', 20.00),
+    (9,  'Prueba rápida Triple Felina', 'Descarte de Leucemia, SIDA y Panleucopenia.', 35.00),
+    (10, 'Medición de presión arterial', 'Monitoreo preventivo cardiovascular.', 15.00),
+    (11, 'Inyección subcutánea terapéutica', 'Aplicación clínica controlada.', 5.00),
+    (12, 'Limpieza ocular con suero', 'Lavado antiséptico de sacos conjuntivales.', 8.00),
+    (13, 'Prueba de Fluoresceína', 'Tinción ocular para evaluar extensión de úlcera.', 8.00),
+    (14, 'Radiografía digital', 'Dos proyecciones ortogonales de fémur izquierdo.', 40.00),
+    (14, 'Cirugía Ortopédica - Osteosíntesis', 'Fijación de fémur mediante placa y tornillos.', 350.00),
+    (15, 'Perfil geriátrico bioquímico', 'Análisis de funcionamiento renal y hepático.', 35.00),
+    (16, 'Ecocardiograma Doppler', 'Evaluación dimensional y flujo de cámaras cardíacas.', 65.00),
+    (17, 'Examen general de orina', 'Toma de muestra y lectura de Sedimento.', 12.00),
+    (18, 'Medición de glucosa en sangre', 'Monitoreo rápido con glucómetro portátil.', 6.00),
+    (19, 'Citología de piel', 'Tinción e identificación microscópica de levaduras.', 12.00),
+    (20, 'Aplicación de spot-on clínico', 'Colocación profesional de antiparasitario.', 5.00),
+    (21, 'Prueba rápida Triple Felina', 'Descarte de Leucemia, SIDA y Panleucopenia en felino con cuadro respiratorio.', 35.00),
+    (22, 'Radiografía de tórax', 'Dos proyecciones para evaluación de campo pulmonar.', 30.00),
+    (23, 'Auscultación cardiopulmonar ampliada', 'Evaluación de ruidos pulmonares con estetoscopio digital.', 12.00),
+    (24, 'Raspado de piel superficial', 'Toma de muestra para identificación de ectoparásitos.', 10.00),
+    (25, 'Citología de piel', 'Tinción e identificación microscópica de levaduras y cocos.', 12.00),
+    (26, 'Prueba de alergia intradérmica', 'Evaluación de hipersensibilidad cutánea por sospecha de sarna.', 45.00),
+    (27, 'Revisión física pre-vacunación', 'Exploración de ganglios, temperatura y mucosas.', 10.00),
+    (28, 'Inyección subcutánea terapéutica', 'Aplicación clínica controlada de vacuna polivalente.', 5.00),
+    (29, 'Coprológico por flotación', 'Examen de descarte de parásitos gastrointestinales.', 10.00),
+    (30, 'Ecografía abdominal', 'Evaluación de intestino grueso y colon por imagen.', 40.00),
+    (31, 'Consulta clínica preventiva', 'Evaluación física general para confirmar el buen estado de salud.', 18.00),
+    (32, 'Aplicación de vacuna séxtuple', 'Administración del refuerzo correspondiente según el esquema de vacunación.', 30.00),
+    (33, 'Evaluación nutricional', 'Análisis del peso corporal y elaboración de un plan alimenticio.', 20.00),
+    (34, 'Fluidoterapia intravenosa', 'Administración de líquidos y electrolitos para corregir la deshidratación.', 35.00),
+    (35, 'Baño dermatológico medicado', 'Tratamiento tópico con champú especializado para dermatitis alérgica.', 25.00),
+    (36, 'Control postquirúrgico', 'Revisión de la evolución de la herida y del proceso de recuperación.', 22.00),
+    (37, 'Retiro de suturas', 'Extracción de puntos de la herida quirúrgica y limpieza de la zona.', 15.00),
+    (38, 'Desparasitación preventiva', 'Aplicación de antiparasitario interno y externo.', 18.00),
+    (39, 'Nebulización', 'Terapia respiratoria para facilitar la eliminación de secreciones.', 20.00),
+    (40, 'Control nutricional', 'Seguimiento del plan alimenticio y evaluación del estado corporal.', 18.00);
+	
 -- ============================================================
 -- 10° INSERT: tratamiento (20 Inserts)
 -- ============================================================
 INSERT INTO tratamiento (id_diagnostico, fecha_inicio, fecha_fin, descripcion_t, indicaciones_t)
 VALUES (1, '2025-01-10', '2025-01-17', 'Tratamiento Otitis infecciosa', 'Limpieza diaria previa a las gotas.'),
-       (4, '2025-01-25', '2025-01-30', 'Esquema de soporte digestivo', 'Dieta blanda líquida en porciones pequeñas.'),
-       (6, '2025-02-05', '2025-03-05', 'Control ectoparásitos y DAPP', 'Aplicar pipeta y evitar contacto con pulgas.'),
-       (9, '2025-02-20', '2025-02-27', 'Soporte antiviral y sintomático', 'Mantener en ambiente cálido y asear nariz.'),
-       (12, '2025-03-06', '2025-03-13', 'Terapia oftálmica antibacteriana',
-        'Aplicar colirio rigurosamente en horarios.'),
-       (13, '2025-03-10', '2025-03-20', 'Manejo biológico de úlcera corneal',
-        'Uso obligatorio de collar isabelino 24/7.'),
-       (14, '2025-03-16', '2025-04-16', 'Manejo analgésico postoperatorio',
-        'Reposo absoluto en jaula o espacio pequeño.'),
-       (16, '2025-03-25', '2025-09-25', 'Terapia cardíaca de mantenimiento',
-        'Evitar emociones fuertes y ejercicio extremo.'),
-       (19, '2025-04-10', '2025-04-24', 'Tratamiento antimicótico tópico',
-        'Baños terapéuticos dejando actuar el champú.'),
        (2, '2025-01-15', '2025-01-18', 'Monitoreo post-vacunal inmediato', 'Reportar decaimiento o fiebre al médico.'),
        (3, '2025-01-20', '2025-04-20', 'Plan nutricional metabólico', 'Pesar ración exacta indicada por la mañana.'),
-       (5, '2025-02-01', '2025-02-08', 'Suplementación vitamínica general',
-        'Mezclar con el alimento húmedo diariamente.'),
+       (4, '2025-01-25', '2025-01-30', 'Esquema de soporte digestivo', 'Dieta blanda líquida en porciones pequeñas.'),
+       (5, '2025-02-01', '2025-02-08', 'Suplementación vitamínica general', 'Mezclar con el alimento húmedo diariamente.'),
+       (6, '2025-02-05', '2025-03-05', 'Control ectoparásitos y DAPP', 'Aplicar pipeta y evitar contacto con pulgas.'),
        (7, '2025-02-10', '2025-02-15', 'Esquema preventivo de crecimiento', 'Monitorear consistencia de las heces.'),
-       (8, '2025-02-15', '2025-02-22', 'Higiene dental oral preventiva',
-        'Aplicar gel antiséptico dental por las noches.'),
-       (10, '2025-02-25', '2025-03-25', 'Esquema dietético para control graso',
-        'Prohibido dar premios o comida casera.'),
-       (11, '2025-03-02', '2025-03-05', 'Manejo preventivo inmunológico',
-        'Evitar paseos públicos por las próximas 48h.'),
-       (15, '2025-03-20', '2025-04-20', 'Condroprotección geriátrica articular',
-        'Suministrar tableta masticable por las mañanas.'),
-       (17, '2025-04-01', '2025-04-08', 'Tratamiento preventivo urinario',
-        'Aumentar el consumo de agua colocando más fuentes.'),
-       (18, '2025-04-05', '2025-04-12', 'Control glucémico preventivo',
-        'Mantener horarios fijos para la alimentación.'),
-       (20, '2025-04-15', '2025-04-18', 'Plan antiparasitario de amplio espectro',
-        'Verificar la eliminación de parásitos en cajas.');
-
---DATOS NUEVOS (10)
--- Vinculados a diagnósticos id 26 al 35
-INSERT INTO tratamiento (id_diagnostico, fecha_inicio, fecha_fin, descripcion_t, indicaciones_t)
-VALUES
-       (26, '2026-06-18', '2026-06-25', 'Soporte antiviral y mucolítico felino',       'Mantener en ambiente cálido y limpiar secreción nasal.'),
-       (27, '2026-06-19', '2026-06-26', 'Terapia broncodilatadora ambulatoria',        'Evitar exposición a humo, polvo y ambientes fríos.'),
-       (28, '2026-06-20', '2026-06-27', 'Manejo sintomático de traqueobronquitis',     'Reposo y aislamiento de otros perros por 7 días.'),
-       (29, '2026-06-18', '2026-07-18', 'Control ectoparásitos y DAPP',                'Aplicar pipeta y evitar contacto con pulgas del entorno.'),
-       (30, '2026-06-19', '2026-07-03', 'Tratamiento antimicótico tópico intensivo',   'Baños terapéuticos dejando actuar el champú 10 minutos.'),
-       (31, '2026-06-20', '2026-07-20', 'Terapia antiparasitaria y antiinflamatoria',  'Tratar también el ambiente del hogar con acaricida.'),
-       (32, '2026-06-18', '2026-06-21', 'Monitoreo post-vacunal inmediato',            'Reportar decaimiento, fiebre o vómito al médico.'),
-       (33, '2026-06-19', '2026-06-22', 'Refuerzo inmunológico post-vacunación',       'Evitar paseos públicos por las próximas 48 horas.'),
-       (34, '2026-06-20', '2026-06-27', 'Esquema de soporte digestivo agudo',          'Dieta blanda en porciones pequeñas cada 4 horas.'),
-       (35, '2026-06-21', '2026-07-05', 'Manejo de colitis crónica reagudizada',       'Prohibido dar comida casera o premios fuera de dieta.');
+       (8, '2025-02-15', '2025-02-22', 'Higiene dental oral preventiva', 'Aplicar gel antiséptico dental por las noches.'),
+       (9, '2025-02-20', '2025-02-27', 'Soporte antiviral y sintomático', 'Mantener en ambiente cálido y asear nariz.'),
+       (10, '2025-02-25', '2025-03-25', 'Esquema dietético para control graso', 'Prohibido dar premios o comida casera.'),
+       (11, '2025-03-02', '2025-03-05', 'Manejo preventivo inmunológico', 'Evitar paseos públicos por las próximas 48h.'),
+       (12, '2025-03-06', '2025-03-13', 'Terapia oftálmica antibacteriana', 'Aplicar colirio rigurosamente en horarios.'),
+       (13, '2025-03-10', '2025-03-20', 'Manejo biológico de úlcera corneal', 'Uso obligatorio de collar isabelino 24/7.'),
+       (14, '2025-03-16', '2025-04-16', 'Manejo analgésico postoperatorio', 'Reposo absoluto en jaula o espacio pequeño.'),
+       (15, '2025-03-20', '2025-04-20', 'Condroprotección geriátrica articular', 'Suministrar tableta masticable por las mañanas.'),
+       (16, '2025-03-25', '2025-09-25', 'Terapia cardíaca de mantenimiento', 'Evitar emociones fuertes y ejercicio extremo.'),
+       (17, '2025-04-01', '2025-04-08', 'Tratamiento preventivo urinario', 'Aumentar el consumo de agua colocando más fuentes.'),
+       (18, '2025-04-05', '2025-04-12', 'Control glucémico preventivo', 'Mantener horarios fijos para la alimentación.'),
+       (19, '2025-04-10', '2025-04-24', 'Tratamiento antimicótico tópico', 'Baños terapéuticos dejando actuar el champú.'),
+       (20, '2025-04-15', '2025-04-18', 'Plan antiparasitario de amplio espectro', 'Verificar la eliminación de parásitos en cajas.'),
+       (21, '2026-06-18', '2026-06-25', 'Soporte antiviral y mucolítico felino', 'Mantener en ambiente cálido y limpiar secreción nasal.'),
+       (22, '2026-06-19', '2026-06-26', 'Terapia broncodilatadora ambulatoria', 'Evitar exposición a humo, polvo y ambientes fríos.'),
+       (23, '2026-06-20', '2026-06-27', 'Manejo sintomático de traqueobronquitis', 'Reposo y aislamiento de otros perros por 7 días.'),
+       (24, '2026-06-18', '2026-07-18', 'Control ectoparásitos y DAPP', 'Aplicar pipeta y evitar contacto con pulgas del entorno.'),
+       (25, '2026-06-19', '2026-07-03', 'Tratamiento antimicótico tópico intensivo', 'Baños terapéuticos dejando actuar el champú 10 minutos.'),
+       (26, '2026-06-20', '2026-07-20', 'Terapia antiparasitaria y antiinflamatoria', 'Tratar también el ambiente del hogar con acaricida.'),
+       (27, '2026-06-18', '2026-06-21', 'Monitoreo post-vacunal inmediato', 'Reportar decaimiento, fiebre o vómito al médico.'),
+       (28, '2026-06-19', '2026-06-22', 'Refuerzo inmunológico post-vacunación', 'Evitar paseos públicos por las próximas 48 horas.'),
+       (29, '2026-06-20', '2026-06-27', 'Esquema de soporte digestivo agudo', 'Dieta blanda en porciones pequeñas cada 4 horas.'),
+       (30, '2026-06-21', '2026-07-05', 'Manejo de colitis crónica reagudizada', 'Prohibido dar comida casera o premios fuera de dieta.'),
+	   (31, '2026-06-15', '2026-06-20', 'Seguimiento preventivo sin medicación específica.', 'Mantener una alimentación balanceada y asistir al control en seis meses.'),
+       (32, '2026-06-15', '2026-06-16', 'Observación posterior a la aplicación de la vacuna.', 'Vigilar posibles reacciones adversas durante las siguientes 24 horas.'),
+       (33, '2026-06-16', '2026-07-16', 'Plan de reducción de peso mediante dieta controlada.', 'Disminuir las porciones de alimento y realizar ejercicio diariamente.'),
+       (34, '2026-06-16', '2026-06-21', 'Tratamiento para gastroenteritis con medicamentos y dieta blanda.', 'Mantener hidratación constante y administrar los medicamentos según indicación.'),
+       (35, '2026-06-16', '2026-06-30', 'Tratamiento para dermatitis alérgica.', 'Aplicar crema tópica dos veces al día y evitar el contacto con alérgenos.'),
+       (36, '2026-06-17', '2026-06-24', 'Recuperación postoperatoria con control de la herida.', 'Mantener reposo, evitar esfuerzos y administrar analgésicos prescritos.'),
+       (37, '2026-06-17', '2026-06-24', 'Seguimiento del proceso de cicatrización.', 'Mantener la herida limpia y asistir al retiro de suturas en la fecha indicada.'),
+       (38, '2026-06-17', '2026-06-18', 'Control preventivo sin necesidad de tratamiento farmacológico.', 'Continuar con los controles veterinarios de rutina.'),
+       (39, '2026-06-18', '2026-06-25', 'Tratamiento para infección respiratoria leve.', 'Administrar antibióticos completos y evitar la exposición al frío.'),
+       (40, '2026-06-18', '2026-07-18', 'Seguimiento nutricional y control del peso corporal.', 'Mantener la dieta recomendada y realizar actividad física moderada.');
 
 -- ============================================================
 -- 11° INSERT: medicamentos (20 Inserts)
@@ -714,7 +724,18 @@ VALUES ('Epiotic Complete', 'Suspensión ótica 125ml', 'Virbac', 18.50, 25),
        ('Cranberry Urinary', 'Frasco 60 tabletas mastic', 'Nutri-Vet', 21.50, 14),
        ('Tramadol Gotas', 'Frasco gotero 20ml', 'Drag Pharma', 13.40, 28),
        ('Amoxicilina + AC', 'Frasco suspensión 60ml', 'Zoetis', 16.50, 35),
-       ('Canisulta', 'Ungüento dérmico 15g', 'Veterina', 9.00, 40);
+       ('Canisulta', 'Ungüento dérmico 15g', 'Veterina', 9.00, 40),
+	   ('Cerenia', 'Caja 4 tabletas 24mg', 'Zoetis', 27.50, 18),
+       ('Apoquel', 'Caja 20 tabletas 16mg', 'Zoetis', 48.00, 12),
+       ('Aureomicina Oftálmica', 'Tubo 3.5g', 'Pfizer', 11.50, 25),
+       ('Baytril', 'Blíster 10 tabletas 50mg', 'Elanco', 18.75, 30),
+       ('Omeprazol Vet', 'Caja 14 cápsulas 20mg', 'Calox', 9.80, 40),
+       ('Lactato de Ringer', 'Bolsa 500ml', 'Baxter', 6.50, 60),
+       ('Atopica', 'Caja 15 cápsulas 50mg', 'Elanco', 62.00, 10),
+       ('Rimadyl', 'Blíster 14 tabletas 50mg', 'Zoetis', 26.00, 22),
+       ('Metronidazol Vet', 'Caja 20 tabletas 250mg', 'Drag Pharma', 14.50, 35),
+       ('Mupirocina Ungüento', 'Tubo 15g', 'Calox', 8.90, 28);
+
 
 -- ============================================================
 -- 12° INSERT: detalles_tratamientos (Automatizado por Trigger)
@@ -741,19 +762,31 @@ VALUES (1, 1, 1, '5 gotas por oído afectado', 'Cada 12 horas', 7), -- El trigge
        (19, 15, 5, '1 tableta masticable total', 'Dosis única', 1),
        (20, 16, 19, '1.0 ml suspensión vía oral', 'Cada 12 horas', 10);
 
---NUEVOS DATOS (10)
+--NUEVOS DATOS
 INSERT INTO detalles_tratamientos (id_detalle_tratamiento, id_tratamiento, id_medicamento, dosis_dt, frecuencia_dt, duracion_dias_dt)
 VALUES
-       (21, 62, 2,  '5 ml jarabe vía oral',               'Cada 12 horas', 7), 
-       (22, 63, 9,  '1 tableta vía oral',                 'Cada 12 horas', 7),   
-       (23, 63, 8,  '8 gotas vía oral',                   'Cada 24 horas', 5),   
-       (24, 64, 3,  '1.5 ml vía oral',                    'Cada 12 horas', 7),   
-       (25, 65, 4,  '1 tableta masticable total',          'Dosis única',   1),  
-       (26, 66, 11, 'Baño completo dos veces por semana', 'Cada 3 días',   14),  
-       (27, 67, 16, '1/2 tableta vía oral',               'Cada 24 horas', 14),  
-       (28, 68, 5,  '1 tableta masticable total',          'Dosis única',   1),   
-       (29, 69, 19, '1.0 ml suspensión vía oral',         'Cada 12 horas', 7),   
-       (30, 70, 7,  '1 tableta vía oral',                 'Cada 24 horas', 7);   
+       (21, 21, 2,  '5 ml jarabe vía oral',               'Cada 12 horas', 7), 
+       (22, 22, 9,  '1 tableta vía oral',                 'Cada 12 horas', 7),   
+       (23, 22, 8,  '8 gotas vía oral',                   'Cada 24 horas', 5),   
+       (24, 23, 3,  '1.5 ml vía oral',                    'Cada 12 horas', 7),   
+       (25, 24, 4,  '1 tableta masticable total',          'Dosis única',   1),  
+       (26, 25, 11, 'Baño completo dos veces por semana', 'Cada 3 días',   14),  
+       (27, 26, 16, '1/2 tableta vía oral',               'Cada 24 horas', 14),  
+       (28, 27, 5,  '1 tableta masticable total',          'Dosis única',   1),   
+       (29, 28, 19, '1.0 ml suspensión vía oral',         'Cada 12 horas', 7),   
+       (30, 29, 7,  '1 tableta vía oral',                 'Cada 24 horas', 7),
+	   (31, 31, 21, '1 tableta vía oral',                 'Cada 24 horas', 5),
+       (32, 32, 22, '1/2 tableta vía oral',               'Cada 24 horas', 14),
+       (33, 33, 30, 'Aplicar una capa fina sobre la lesión', 'Cada 12 horas', 10),
+       (34, 34, 29, '1 tableta vía oral',                 'Cada 12 horas', 7),
+       (35, 35, 27, '1 cápsula vía oral',                 'Cada 24 horas', 21),
+       (36, 36, 28, '1 tableta vía oral',                 'Cada 12 horas', 7),
+       (37, 37, 26, '1 dosis intravenosa',                'Cada 24 horas', 3),
+       (38, 38, 23, '2 gotas en el ojo afectado',         'Cada 8 horas', 7),
+       (39, 39, 24, '1 tableta vía oral',                 'Cada 24 horas', 10),
+       (40, 40, 25, '1 cápsula vía oral',                 'Cada 24 horas', 14);
+
+
 -- ============================================================
 -- 13° INSERT: facturas (20 Inserts)
 -- ============================================================
@@ -777,7 +810,18 @@ VALUES (1, '2025-01-10', 'Pendiente', 0),   -- id_factura: 1  (Cuadra con Detall
        (26, '2025-05-15', 'Pagada', 62.00),
        (31, '2025-06-11', 'Pendiente', 0), -- id_factura: 18 (Cuadra con Detalles F18)
        (34, '2025-06-25', 'Pagada', 109.00),
-       (35, '2025-06-28', 'Pagada', 81.50);
+       (35, '2025-06-28', 'Pagada', 81.50),
+       (61, '2026-06-15', 'Pendiente', 0),
+       (62, '2026-06-15', 'Pendiente', 0),
+       (63, '2026-06-16', 'Pendiente', 0),
+       (64, '2026-06-16', 'Pendiente', 0),
+       (65, '2026-06-16', 'Pendiente', 0),
+       (66, '2026-06-17', 'Pendiente', 0),
+       (67, '2026-06-17', 'Pendiente', 0),
+       (68, '2026-06-17', 'Pendiente', 0),
+       (69, '2026-06-18', 'Pendiente', 0),
+       (70, '2026-06-18', 'Pendiente', 0);
+
 
 -- ============================================================
 -- 14° INSERT: detalles_facturas (Automatizado por Trigger)
@@ -815,4 +859,43 @@ VALUES
 (16, 18, 31, NULL, NULL, NULL, 'Costo de atención - Vacunación anual base', 1, 25.00),
 (17, 18, NULL, NULL, NULL, 12, 'Procedimiento Dental: Profilaxis ultrasónica', 1, 60.00),
 (18, 18, NULL, NULL, NULL, 14, 'Procedimiento Quirúrgico: Extracción de incisivo', 3, 20.00),
-(19, 18, NULL, 14, 12, NULL, 'Medicamento Antibiótico: Clindamicina caja', 2, 13.10);
+(19, 18, NULL, 14, 12, NULL, 'Medicamento Antibiótico: Clindamicina caja', 2, 13.10),
+(20, 21, 61, NULL, NULL, NULL, 'Costo de atención - Consulta médica general', 1, 20.00),
+(21, 21, NULL, NULL, NULL, 31, 'Procedimiento Clínico: Consulta clínica preventiva', 1, 18.00),
+(22, 21, NULL, 21, 31, NULL, 'Medicamento Recetado: Cerenia', 1, 27.50),
+
+(23, 22, 62, NULL, NULL, NULL, 'Costo de atención - Vacunación anual', 1, 25.00),
+(24, 22, NULL, NULL, NULL, 32, 'Procedimiento Clínico: Aplicación de vacuna séxtuple', 1, 30.00),
+(25, 22, NULL, 22, 32, NULL, 'Medicamento Recetado: Apoquel', 1, 48.00),
+
+(26, 23, 63, NULL, NULL, NULL, 'Costo de atención - Evaluación nutricional', 1, 20.00),
+(27, 23, NULL, NULL, NULL, 33, 'Procedimiento Clínico: Evaluación nutricional', 1, 20.00),
+(28, 23, NULL, 30, 33, NULL, 'Medicamento Recetado: Mupirocina Ungüento', 1, 8.90),
+
+(29, 24, 64, NULL, NULL, NULL, 'Costo de atención - Consulta por gastroenteritis', 1, 25.00),
+(30, 24, NULL, NULL, NULL, 34, 'Procedimiento Clínico: Fluidoterapia intravenosa', 1, 35.00),
+(31, 24, NULL, 29, 34, NULL, 'Medicamento Recetado: Metronidazol Vet', 1, 14.50),
+
+(32, 25, 65, NULL, NULL, NULL, 'Costo de atención - Consulta dermatológica', 1, 30.00),
+(33, 25, NULL, NULL, NULL, 35, 'Procedimiento Clínico: Baño dermatológico medicado', 1, 25.00),
+(34, 25, NULL, 27, 35, NULL, 'Medicamento Recetado: Atopica', 1, 62.00),
+
+(35, 26, 66, NULL, NULL, NULL, 'Costo de atención - Control postquirúrgico', 1, 30.00),
+(36, 26, NULL, NULL, NULL, 36, 'Procedimiento Clínico: Control postquirúrgico', 1, 22.00),
+(37, 26, NULL, 28, 36, NULL, 'Medicamento Recetado: Rimadyl', 1, 26.00),
+
+(38, 27, 67, NULL, NULL, NULL, 'Costo de atención - Retiro de suturas', 1, 20.00),
+(39, 27, NULL, NULL, NULL, 37, 'Procedimiento Clínico: Retiro de suturas', 1, 15.00),
+(40, 27, NULL, 26, 37, NULL, 'Medicamento Recetado: Lactato de Ringer', 1, 6.50),
+
+(41, 28, 68, NULL, NULL, NULL, 'Costo de atención - Consulta preventiva', 1, 20.00),
+(42, 28, NULL, NULL, NULL, 38, 'Procedimiento Clínico: Desparasitación preventiva', 1, 18.00),
+(43, 28, NULL, 23, 38, NULL, 'Medicamento Recetado: Aureomicina Oftálmica', 1, 11.50),
+
+(44, 29, 69, NULL, NULL, NULL, 'Costo de atención - Consulta respiratoria', 1, 25.00),
+(45, 29, NULL, NULL, NULL, 39, 'Procedimiento Clínico: Nebulización', 1, 20.00),
+(46, 29, NULL, 24, 39, NULL, 'Medicamento Recetado: Baytril', 1, 18.75),
+
+(47, 30, 70, NULL, NULL, NULL, 'Costo de atención - Control nutricional', 1, 20.00),
+(48, 30, NULL, NULL, NULL, 40, 'Procedimiento Clínico: Control nutricional', 1, 18.00),
+(49, 30, NULL, 25, 40, NULL, 'Medicamento Recetado: Omeprazol Vet', 1, 9.80);
